@@ -14,31 +14,31 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin("*")
 @RequestMapping("/procedures")
 public class ProcedureController {
-    private ProcedureService procedureService;
+    private ProcedureService service;
 
     @GetMapping("/{procedureId}")
     public ResponseEntity<Object> getProcedure(@PathVariable("procedureId") int procedureId) {
-        return ResponseEntity.ok(procedureService.get(procedureId));
+        return ResponseEntity.ok(service.get(procedureId));
     }
 
     @PutMapping("/{procedureId}")
     public ResponseEntity<Object> updateProcedure(@PathVariable("procedureId") int procedureId, @RequestBody ProcedureRequest request) {
-        return ResponseEntity.ok(procedureService.update(procedureId, request));
+        return ResponseEntity.ok(service.update(procedureId, request));
     }
 
     @PostMapping("")
     public ResponseEntity<Object> addProcedure(@RequestBody ProcedureRequest request) {
-        return ResponseEntity.ok(procedureService.add(request));
+        return ResponseEntity.ok(service.add(request));
     }
 
     @GetMapping("")
     public ResponseEntity<Object> getAllProcedure() {
-        return ResponseEntity.ok(procedureService.getAll());
+        return ResponseEntity.ok(service.getAll());
     }
 
     @DeleteMapping("/{procedureId}")
     public ResponseEntity<Object> deleteProcedure(@PathVariable("procedureId") int procedureId) {
-        if (procedureService.delete(procedureId)) return ResponseEntity.ok(HttpStatus.OK.getReasonPhrase());
+        if (service.delete(procedureId)) return ResponseEntity.ok(HttpStatus.OK.getReasonPhrase());
         return ResponseEntity.ok(HttpStatus.BAD_REQUEST.getReasonPhrase());
     }
 }

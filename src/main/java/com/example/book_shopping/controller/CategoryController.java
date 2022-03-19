@@ -15,31 +15,31 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin("*")
 @RequestMapping("/categories")
 public class CategoryController {
-    private CategoryService categoryService;
+    private CategoryService service;
 
     @GetMapping("/{categoryId}")
     public ResponseEntity<Object> getCategory(@PathVariable("categoryId") int categoryId) {
-        return ResponseEntity.ok(categoryService.get(categoryId));
+        return ResponseEntity.ok(service.get(categoryId));
     }
 
     @PutMapping("/{categoryId}")
     public ResponseEntity<Object> updateCategory(@PathVariable("categoryId") int categoryId, @RequestBody UpdateCategoryRequest request) {
-        return ResponseEntity.ok(categoryService.update(categoryId, request));
+        return ResponseEntity.ok(service.update(categoryId, request));
     }
 
     @PostMapping("")
     public ResponseEntity<Object> addCategory(@RequestBody CreateCategoryRequest request) {
-        return ResponseEntity.ok(categoryService.add(request));
+        return ResponseEntity.ok(service.add(request));
     }
 
     @GetMapping("")
     public ResponseEntity<Object> getAllCategory() {
-        return ResponseEntity.ok(categoryService.getAll());
+        return ResponseEntity.ok(service.getAll());
     }
 
     @DeleteMapping("/{categoryId}")
     public ResponseEntity<Object> deleteCategory(@PathVariable("categoryId") int categoryId) {
-        if (categoryService.delete(categoryId)) return ResponseEntity.ok(HttpStatus.OK.getReasonPhrase());
+        if (service.delete(categoryId)) return ResponseEntity.ok(HttpStatus.OK.getReasonPhrase());
         return ResponseEntity.ok(HttpStatus.BAD_REQUEST.getReasonPhrase());
     }
 }

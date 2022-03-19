@@ -5,7 +5,6 @@ import com.example.book_shopping.exception.BadRequestException;
 import com.example.book_shopping.exception.NotFoundException;
 import com.example.book_shopping.repository.ProductRepository;
 import com.example.book_shopping.response.ProductResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 

@@ -6,7 +6,6 @@ import com.example.book_shopping.exception.DuplicateRecordException;
 import com.example.book_shopping.exception.NotFoundException;
 import com.example.book_shopping.repository.ProcedureRepository;
 import com.example.book_shopping.request.ProcedureRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +21,7 @@ public class ProcedureService {
     private ProcedureRepository procedureRepository;
 
 
-    private boolean existById(int id) {
+    public boolean existById(int id) {
         try {
             return procedureRepository.existsById(id);
         } catch (Exception e) {
@@ -32,9 +31,7 @@ public class ProcedureService {
 
     public List<Procedure> getAll() {
         try {
-            List<Procedure> procedures = procedureRepository.findAll();
-            if (!procedures.isEmpty()) return procedures;
-            throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
+            return procedureRepository.findAll();
         } catch (Exception e) {
             throw new BadRequestException(e.getMessage());
         }
@@ -42,8 +39,8 @@ public class ProcedureService {
 
     public Procedure get(int id) {
         try {
-            Optional<Procedure> Procedure = procedureRepository.findById(id);
-            if (Procedure.isPresent()) return Procedure.get();
+            Optional<Procedure> procedure = procedureRepository.findById(id);
+            if (procedure.isPresent()) return procedure.get();
             throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
         } catch (Exception e) {
             throw new BadRequestException(e.getMessage());

@@ -18,16 +18,16 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/users")
 public class UserController {
     @Autowired
-    private UserService userService;
+    private UserService service;
 
     @PostMapping("/sign_in")
     public ResponseEntity<Object> signIn(@RequestBody SignInRequest request) {
-        return ResponseEntity.ok(userService.signIn(request));
+        return ResponseEntity.ok(service.signIn(request));
     }
 
     @PostMapping("/sign_out/{userId}")
     public ResponseEntity<Object> signIn(@PathVariable("userId") int userId) {
-        if (userService.signOut(userId)) {
+        if (service.signOut(userId)) {
             return ResponseEntity.ok(HttpStatus.OK.getReasonPhrase());
         }
         return ResponseEntity.ok(HttpStatus.BAD_REQUEST.getReasonPhrase());
@@ -35,16 +35,16 @@ public class UserController {
 
     @PostMapping("/sign_up")
     public ResponseEntity<Object> signUp(@RequestBody SignUpRequest request) {
-        return ResponseEntity.ok(userService.signUp(request));
+        return ResponseEntity.ok(service.signUp(request));
     }
 
     @GetMapping("/{userId}")
     public ResponseEntity<Object> getUserDetail(@PathVariable("userId") int userId) {
-        return ResponseEntity.ok(userService.get(userId));
+        return ResponseEntity.ok(service.get(userId));
     }
 
     @PutMapping("/{userId}")
     public ResponseEntity<Object> updateUser(@PathVariable("userId") int userId, @RequestBody UpdateUserRequest request) {
-        return ResponseEntity.ok(userService.update(userId, request));
+        return ResponseEntity.ok(service.update(userId, request));
     }
 }

@@ -10,7 +10,6 @@ import com.example.book_shopping.request.SignUpRequest;
 import com.example.book_shopping.request.UpdateUserRequest;
 import com.example.book_shopping.response.UserDetailResponse;
 import com.example.book_shopping.response.UserResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +22,14 @@ import java.util.Optional;
 @Service
 public class UserService {
     private UserRepository userRepository;
+
+    public boolean existById(int id) {
+        try {
+            return userRepository.existsById(id);
+        } catch (Exception e) {
+            throw new BadRequestException(e.getMessage());
+        }
+    }
 
     public UserResponse signIn(SignInRequest request) {
         try {
