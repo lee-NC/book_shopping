@@ -40,7 +40,7 @@ public class CartService {
         try {
             User user = userRepository.findByIdAndIsActive(userId, true);
             if (user != null) {
-                List<Cart> carts = cartRepository.findAllByUserOrderByProcedureId(user);
+                List<Cart> carts = cartRepository.findAllByUserGroupByProcedureIdOrderByUpdatedAt(user);
                 if (carts == null) throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
                 List<CartResponse> cartResponses = new ArrayList<>();
                 for (Cart cart : carts) {
@@ -59,16 +59,13 @@ public class CartService {
         try {
             User user = userRepository.findByIdAndIsActive(userId, true);
             Product product = productRepository.findByIdAndIsActive(request.getProductId(), true);
-            if (user != null && product != null) {
-                if (request.getAmount()>0 && request.getAmount() <= product.getAmount()){
-                    System.out.println("SONE");
+            if (user != null && product != null && request.getAmount()>0 && request.getAmount() <= product.getAmount()){
                     Cart cart = new Cart();
                     cart.setAmount(request.getAmount());
                     cart.setProduct(product);
                     cart.setUser(user);
                     cartRepository.save(cart);
                     return true;
-                }
             }
             throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
         } catch (Exception e) {
