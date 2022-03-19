@@ -2,6 +2,8 @@ package com.example.book_shopping.controller;
 
 import com.example.book_shopping.request.AddressRequest;
 import com.example.book_shopping.service.AddressService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,9 +17,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/addresses")
 public class AddressController {
     private final AddressService service;
+    Logger logger = LoggerFactory.getLogger(AddressController.class);
 
     public AddressController(AddressService service) {
         this.service = service;
+        logger.info(logger.getName());
     }
 
 

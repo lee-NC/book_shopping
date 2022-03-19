@@ -29,17 +29,17 @@ public class ProductController {
         return ResponseEntity.ok(service.getAllByPrice(Double.parseDouble(greater), Double.parseDouble(less)));
     }
 
-    @GetMapping("/{categoryId}")
+    @GetMapping("/category/{categoryId}")
     public ResponseEntity<Object> getProductByCategoryId(@PathVariable("categoryId") int categoryId) {
         return ResponseEntity.ok(service.getAllByCategoryId(categoryId));
     }
 
-    @GetMapping("/{procedureId}")
+    @GetMapping("/procedure/{procedureId}")
     public ResponseEntity<Object> getProductByProcedureId(@PathVariable("procedureId") int procedureId) {
         return ResponseEntity.ok(service.getAllByProcedureId(procedureId));
     }
 
-    @GetMapping("/{languageId}")
+    @GetMapping("/language/{languageId}")
     public ResponseEntity<Object> getProductByLanguageId(@PathVariable("languageId") int languageId) {
         return ResponseEntity.ok(service.getAllByLanguageId(languageId));
     }
@@ -69,7 +69,7 @@ public class ProductController {
         return ResponseEntity.ok(service.getAll());
     }
 
-    @PutMapping("/{productId}")
+    @PutMapping("/status/{productId}")
     public ResponseEntity<Object> changeStatus(@PathVariable("productId") int productId) {
         return ResponseEntity.ok(service.changeStatus(productId));
     }
