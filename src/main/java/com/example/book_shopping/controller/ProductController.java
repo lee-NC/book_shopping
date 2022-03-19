@@ -77,7 +77,6 @@ public class ProductController {
 
     @DeleteMapping("/{productId}")
     public ResponseEntity<Object> deleteProduct(@PathVariable("productId") int productId) {
-        if (service.delete(productId)) return ResponseEntity.ok(HttpStatus.OK.getReasonPhrase());
-        return ResponseEntity.ok(HttpStatus.BAD_REQUEST.getReasonPhrase());
+        return service.delete(productId) ? ResponseEntity.ok(HttpStatus.OK.getReasonPhrase()) : ResponseEntity.ok(HttpStatus.BAD_REQUEST.getReasonPhrase());
     }
 }

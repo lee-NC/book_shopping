@@ -19,9 +19,9 @@ public class User extends BaseEntity {
     private String email;
     @Column(nullable = false)
     private String password;
-    @Column(nullable = false, columnDefinition = "BIT(1) default false")
+    @Column(nullable = false, columnDefinition = "boolean default false")
     private boolean isAdmin;
-    @Column(nullable = false, columnDefinition = "BIT(1) default true")
+    @Column(nullable = false, columnDefinition = "boolean default true")
     private boolean isActive;
 
     public User() {

@@ -3,6 +3,7 @@ package com.example.book_shopping.response;
 import com.example.book_shopping.entity.Category;
 import com.example.book_shopping.entity.Language;
 import com.example.book_shopping.entity.Procedure;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * @author lengo
@@ -13,11 +14,14 @@ public class ProductResponse {
     private String name;
     private String desc;
     private int publishingYear;
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Language language;
     private String price;
     private int amount;
     private boolean isActive;
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Procedure procedure;
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Category category;
 
     public ProductResponse() {

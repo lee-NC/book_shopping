@@ -21,7 +21,7 @@ public class Product extends BaseEntity {
     private double price;
     @Column(name = "amount", nullable = false)
     private int amount;
-    @Column(nullable = false, columnDefinition = "BIT(1) default true")
+    @Column(nullable = false, columnDefinition = "boolean default true")
     private boolean isActive;
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "procedureId", referencedColumnName = "id", nullable = false)

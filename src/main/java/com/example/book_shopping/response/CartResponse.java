@@ -1,5 +1,7 @@
 package com.example.book_shopping.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * @author lengo
  * created on 3/20/2022
@@ -7,6 +9,7 @@ package com.example.book_shopping.response;
 public class CartResponse {
     private int id;
     private int amount;
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private ProductCartResponse productCartResponse;
 
     public CartResponse() {

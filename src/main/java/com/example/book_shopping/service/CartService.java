@@ -8,6 +8,7 @@ import com.example.book_shopping.exception.NotFoundException;
 import com.example.book_shopping.repository.CartRepository;
 import com.example.book_shopping.repository.ProductRepository;
 import com.example.book_shopping.repository.UserRepository;
+import com.example.book_shopping.request.CreateCartRequest;
 import com.example.book_shopping.response.CartResponse;
 import com.example.book_shopping.response.ListCartResponse;
 import com.example.book_shopping.response.ProductCartResponse;
@@ -46,6 +47,28 @@ public class CartService {
                     cartResponses.add(toCartResponse(cart));
                 }
                 return new ListCartResponse(toUserCartResponse(user), cartResponses);
+            }
+            throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new BadRequestException(e.getMessage());
+        }
+    }
+
+    public boolean add(int userId, CreateCartRequest request) {
+        try {
+            User user = userRepository.findByIdAndIsActive(userId, true);
+            Product product = productRepository.findByIdAndIsActive(request.getProductId(), true);
+            if (user != null && product != null) {
+                if (request.getAmount()>0 && request.getAmount() <= product.getAmount()){
+                    System.out.println("SONE");
+                    Cart cart = new Cart();
+                    cart.setAmount(request.getAmount());
+                    cart.setProduct(product);
+                    cart.setUser(user);
+                    cartRepository.save(cart);
+                    return true;
+                }
             }
             throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
         } catch (Exception e) {

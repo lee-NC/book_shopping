@@ -16,6 +16,8 @@ import java.util.List;
  */
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
+    Product findByIdAndIsActive(int id, boolean isActive);
+
     List<Product> findAllByCategory(Category category);
 
     List<Product> findAllByProcedure(Procedure procedure);

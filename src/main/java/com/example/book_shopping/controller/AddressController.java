@@ -46,8 +46,7 @@ public class AddressController {
 
     @DeleteMapping("/{addressId}")
     public ResponseEntity<Object> deleteAddress(@PathVariable("addressId") int addressId) {
-        if (service.delete(addressId)) return ResponseEntity.ok(HttpStatus.OK.getReasonPhrase());
-        return ResponseEntity.ok(HttpStatus.BAD_REQUEST.getReasonPhrase());
+        return service.delete(addressId) ? ResponseEntity.ok(HttpStatus.OK.getReasonPhrase()) : ResponseEntity.ok(HttpStatus.BAD_REQUEST.getReasonPhrase());
     }
 
 }

@@ -110,7 +110,11 @@ public class ProductService {
 
     public List<ProductResponse> getAll() {
         try {
-            return toProductResponses(productRepository.findAll());
+            List<Product> products = productRepository.findAll();
+            if (products != null) {
+                return toProductResponses(products);
+            }
+            throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
         } catch (Exception e) {
             e.printStackTrace();
             throw new BadRequestException(e.getMessage());

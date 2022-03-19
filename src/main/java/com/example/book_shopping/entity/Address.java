@@ -12,7 +12,7 @@ public class Address extends BaseEntity {
     private String addressDetail;
     @Column()
     private String description;
-    @Column(nullable = false, columnDefinition = "BIT(1) default false")
+    @Column(nullable = false, columnDefinition = "boolean default false")
     private boolean isMain;
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "userId", referencedColumnName = "id", nullable = false)

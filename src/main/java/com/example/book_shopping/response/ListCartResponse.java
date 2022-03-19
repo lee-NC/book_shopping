@@ -1,5 +1,7 @@
 package com.example.book_shopping.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.List;
 
 /**
@@ -7,7 +9,9 @@ import java.util.List;
  * created on 3/20/2022
  */
 public class ListCartResponse {
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private UserCartResponse userCartResponse;
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private List<CartResponse> cartResponses;
 
     public ListCartResponse(UserCartResponse userCartResponse, List<CartResponse> cartResponses) {
