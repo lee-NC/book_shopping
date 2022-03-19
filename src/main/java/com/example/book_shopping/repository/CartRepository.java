@@ -1,6 +1,7 @@
 package com.example.book_shopping.repository;
 
 import com.example.book_shopping.entity.Cart;
+import com.example.book_shopping.entity.Product;
 import com.example.book_shopping.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -20,4 +21,6 @@ public interface CartRepository extends JpaRepository<Cart, Integer> {
             "ORDER BY c.updatedAt",
             countQuery = "SELECT count(c) FROM carts c")
     List<Cart> findAllByUserGroupByProcedureIdOrderByUpdatedAt(User user);
+
+    Cart findByUserAndProduct(User user, Product product);
 }

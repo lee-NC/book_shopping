@@ -9,10 +9,8 @@ import com.example.book_shopping.repository.CartRepository;
 import com.example.book_shopping.repository.ProductRepository;
 import com.example.book_shopping.repository.UserRepository;
 import com.example.book_shopping.request.CreateCartRequest;
-import com.example.book_shopping.response.CartResponse;
-import com.example.book_shopping.response.ListCartResponse;
-import com.example.book_shopping.response.ProductCartResponse;
-import com.example.book_shopping.response.UserCartResponse;
+import com.example.book_shopping.request.UpdateCartRequest;
+import com.example.book_shopping.response.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -22,6 +20,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 
 /**
  * @author lengo
@@ -59,13 +58,55 @@ public class CartService {
         try {
             User user = userRepository.findByIdAndIsActive(userId, true);
             Product product = productRepository.findByIdAndIsActive(request.getProductId(), true);
-            if (user != null && product != null && request.getAmount()>0 && request.getAmount() <= product.getAmount()){
+            if (user != null && request.getAmount() <= product.getAmount()){
+                Cart data = cartRepository.findByUserAndProduct(user, product);
+                if (data!=null){
+                    if ((data.getAmount() + request.getAmount()) <= product.getAmount()){
+                        data.setAmount(data.getAmount() + request.getAmount());
+                        cartRepository.save(data);
+                    }
+                    else throw new BadRequestException("Products to the limit");
+                }
+                else {
                     Cart cart = new Cart();
                     cart.setAmount(request.getAmount());
                     cart.setProduct(product);
                     cart.setUser(user);
                     cartRepository.save(cart);
-                    return true;
+                }
+                return true;
+            }
+            throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new BadRequestException(e.getMessage());
+        }
+    }
+
+    public boolean delete(int id) {
+        try {
+            Optional<Cart> cart = cartRepository.findById(id);
+            if (cart.isPresent()){
+                cartRepository.delete(cart.get());
+                return true;
+            }
+            throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new BadRequestException(e.getMessage());
+        }
+    }
+
+    public CartResponse update(int id, UpdateCartRequest request) {
+        try {
+            Optional<Cart> cart = cartRepository.findById(id);
+            if (cart.isPresent()){
+                Cart data = cart.get();
+                if (data.getProduct().isActive() && request.getAmount()<= data.getProduct().getAmount() ){
+                    data.setAmount(request.getAmount());
+                    data = cartRepository.save(data);
+                    return toCartResponse(data);
+                }
             }
             throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
         } catch (Exception e) {
