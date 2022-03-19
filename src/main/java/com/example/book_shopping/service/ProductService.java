@@ -45,6 +45,7 @@ public class ProductService {
             throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
 
         } catch (Exception e) {
+            e.printStackTrace();
             throw new BadRequestException(e.getMessage());
         }
     }
@@ -59,6 +60,7 @@ public class ProductService {
             throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
 
         } catch (Exception e) {
+            e.printStackTrace();
             throw new BadRequestException(e.getMessage());
         }
     }
@@ -73,6 +75,7 @@ public class ProductService {
             throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
 
         } catch (Exception e) {
+            e.printStackTrace();
             throw new BadRequestException(e.getMessage());
         }
     }
@@ -84,6 +87,7 @@ public class ProductService {
             return toProductResponses(products);
 
         } catch (Exception e) {
+            e.printStackTrace();
             throw new BadRequestException(e.getMessage());
         }
     }
@@ -96,6 +100,7 @@ public class ProductService {
             if (!products.isEmpty()) return toProductResponses(List.copyOf(products));
             throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
         } catch (Exception e) {
+            e.printStackTrace();
             throw new BadRequestException(e.getMessage());
         }
     }
@@ -104,6 +109,7 @@ public class ProductService {
         try {
             return toProductResponses(productRepository.findAll());
         } catch (Exception e) {
+            e.printStackTrace();
             throw new BadRequestException(e.getMessage());
         }
     }
@@ -117,6 +123,7 @@ public class ProductService {
             throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
 
         } catch (Exception e) {
+            e.printStackTrace();
             throw new BadRequestException(e.getMessage());
         }
     }
@@ -141,6 +148,7 @@ public class ProductService {
             throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
 
         } catch (Exception e) {
+            e.printStackTrace();
             throw new BadRequestException(e.getMessage());
         }
     }
@@ -189,6 +197,7 @@ public class ProductService {
             throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
 
         } catch (Exception e) {
+            e.printStackTrace();
             throw new BadRequestException(e.getMessage());
         }
     }
@@ -204,6 +213,7 @@ public class ProductService {
             throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
 
         } catch (Exception e) {
+            e.printStackTrace();
             throw new BadRequestException(e.getMessage());
         }
     }
@@ -218,6 +228,7 @@ public class ProductService {
             throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
 
         } catch (Exception e) {
+            e.printStackTrace();
             throw new BadRequestException(e.getMessage());
         }
     }

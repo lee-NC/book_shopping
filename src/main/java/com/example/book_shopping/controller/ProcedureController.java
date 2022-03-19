@@ -2,6 +2,8 @@ package com.example.book_shopping.controller;
 
 import com.example.book_shopping.request.ProcedureRequest;
 import com.example.book_shopping.service.ProcedureService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/procedures")
 public class ProcedureController {
     private final ProcedureService service;
+    Logger logger = LoggerFactory.getLogger(ProcedureController.class);
 
     public ProcedureController(ProcedureService service) {
         this.service = service;

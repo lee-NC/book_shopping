@@ -35,6 +35,7 @@ public class AddressService {
             }
             throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
         } catch (Exception e) {
+            e.printStackTrace();
             throw new BadRequestException(e.getMessage());
         }
     }
@@ -54,6 +55,7 @@ public class AddressService {
             }
             throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
         } catch (Exception e) {
+            e.printStackTrace();
             throw new BadRequestException(e.getMessage());
         }
     }
@@ -70,6 +72,7 @@ public class AddressService {
             }
             throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
         } catch (Exception e) {
+            e.printStackTrace();
             throw new BadRequestException(e.getMessage());
         }
     }
@@ -96,6 +99,7 @@ public class AddressService {
             }
             throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
         } catch (Exception e) {
+            e.printStackTrace();
             throw new BadRequestException(e.getMessage());
         }
     }
@@ -109,6 +113,7 @@ public class AddressService {
             }
             throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
         } catch (Exception e) {
+            e.printStackTrace();
             throw new BadRequestException(e.getMessage());
         }
     }

@@ -23,12 +23,8 @@ import java.util.Optional;
 public class UserService {
     private UserRepository userRepository;
 
-    public boolean existById(int id) {
-        try {
-            return userRepository.existsById(id);
-        } catch (Exception e) {
-            throw new BadRequestException(e.getMessage());
-        }
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     public UserResponse signIn(SignInRequest request) {
@@ -41,6 +37,7 @@ public class UserService {
             throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
 
         } catch (Exception e) {
+            e.printStackTrace();
             throw new BadRequestException(e.getMessage());
         }
     }
@@ -53,6 +50,7 @@ public class UserService {
             }
             throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
         } catch (Exception e) {
+            e.printStackTrace();
             throw new BadRequestException(e.getMessage());
         }
     }
@@ -73,6 +71,7 @@ public class UserService {
             throw new DuplicateRecordException("Email was sign up. Choose another, please!");
 
         } catch (Exception e) {
+            e.printStackTrace();
             throw new BadRequestException(e.getMessage());
         }
     }
@@ -86,6 +85,7 @@ public class UserService {
             throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
 
         } catch (Exception e) {
+            e.printStackTrace();
             throw new BadRequestException(e.getMessage());
         }
     }
@@ -120,6 +120,7 @@ public class UserService {
             throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
 
         } catch (Exception e) {
+            e.printStackTrace();
             throw new BadRequestException(e.getMessage());
         }
     }

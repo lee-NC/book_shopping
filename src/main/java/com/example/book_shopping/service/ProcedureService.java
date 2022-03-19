@@ -24,6 +24,7 @@ public class ProcedureService {
         try {
             return procedureRepository.findAll();
         } catch (Exception e) {
+            e.printStackTrace();
             throw new BadRequestException(e.getMessage());
         }
     }
@@ -34,6 +35,7 @@ public class ProcedureService {
             if (procedure.isPresent()) return procedure.get();
             throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
         } catch (Exception e) {
+            e.printStackTrace();
             throw new BadRequestException(e.getMessage());
         }
     }
@@ -49,6 +51,7 @@ public class ProcedureService {
             procedure.setName(request.getName().trim());
             return procedureRepository.save(procedure);
         } catch (Exception e) {
+            e.printStackTrace();
             throw new BadRequestException(e.getMessage());
         }
     }
@@ -71,6 +74,7 @@ public class ProcedureService {
             }
             throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
         } catch (Exception e) {
+            e.printStackTrace();
             throw new BadRequestException(e.getMessage());
         }
     }
@@ -84,6 +88,7 @@ public class ProcedureService {
             }
             throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
         } catch (Exception e) {
+            e.printStackTrace();
             throw new BadRequestException(e.getMessage());
         }
     }

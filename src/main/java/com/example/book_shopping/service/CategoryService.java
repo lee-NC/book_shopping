@@ -29,6 +29,7 @@ public class CategoryService {
         try {
             return categoryRepository.findAll();
         } catch (Exception e) {
+            e.printStackTrace();
             throw new BadRequestException(e.getMessage());
         }
     }
@@ -39,6 +40,7 @@ public class CategoryService {
             if (category.isPresent()) return category.get();
             throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
         } catch (Exception e) {
+            e.printStackTrace();
             throw new BadRequestException(e.getMessage());
         }
     }
@@ -54,6 +56,7 @@ public class CategoryService {
             category.setName(request.getName().trim());
             return categoryRepository.save(category);
         } catch (Exception e) {
+            e.printStackTrace();
             throw new BadRequestException(e.getMessage());
         }
     }
@@ -67,6 +70,7 @@ public class CategoryService {
             }
             throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
         } catch (Exception e) {
+            e.printStackTrace();
             throw new BadRequestException(e.getMessage());
         }
     }
@@ -80,6 +84,7 @@ public class CategoryService {
             }
             throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
         } catch (Exception e) {
+            e.printStackTrace();
             throw new BadRequestException(e.getMessage());
         }
     }

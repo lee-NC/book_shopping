@@ -4,7 +4,8 @@ import com.example.book_shopping.request.SignInRequest;
 import com.example.book_shopping.request.SignUpRequest;
 import com.example.book_shopping.request.UpdateUserRequest;
 import com.example.book_shopping.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,8 +18,12 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin("*")
 @RequestMapping("/users")
 public class UserController {
-    @Autowired
-    private UserService service;
+    private final UserService service;
+    Logger logger = LoggerFactory.getLogger(UserController.class);
+
+    public UserController(UserService service) {
+        this.service = service;
+    }
 
     @PostMapping("/sign_in")
     public ResponseEntity<Object> signIn(@RequestBody SignInRequest request) {

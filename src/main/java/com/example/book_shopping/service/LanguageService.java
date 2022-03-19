@@ -28,6 +28,7 @@ public class LanguageService {
         try {
             return languageRepository.findAll();
         } catch (Exception e) {
+            e.printStackTrace();
             throw new BadRequestException(e.getMessage());
         }
     }
@@ -40,6 +41,7 @@ public class LanguageService {
             language.setName(request.getText().trim());
             return languageRepository.save(language);
         } catch (Exception e) {
+            e.printStackTrace();
             throw new BadRequestException(e.getMessage());
         }
     }
@@ -55,6 +57,7 @@ public class LanguageService {
             }
             throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
         } catch (Exception e) {
+            e.printStackTrace();
             throw new BadRequestException(e.getMessage());
         }
     }
@@ -68,6 +71,7 @@ public class LanguageService {
             }
             throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
         } catch (Exception e) {
+            e.printStackTrace();
             throw new BadRequestException(e.getMessage());
         }
     }

@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.*;
 public class CategoryController {
     private final CategoryService service;
     Logger logger = LoggerFactory.getLogger(CategoryController.class);
+
     public CategoryController(CategoryService service) {
         this.service = service;
-        logger.info(logger.getName());
     }
 
     @GetMapping("/{categoryId}")

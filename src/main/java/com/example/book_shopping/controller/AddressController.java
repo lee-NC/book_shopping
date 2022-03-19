@@ -21,7 +21,6 @@ public class AddressController {
 
     public AddressController(AddressService service) {
         this.service = service;
-        logger.info(logger.getName());
     }
 
 
