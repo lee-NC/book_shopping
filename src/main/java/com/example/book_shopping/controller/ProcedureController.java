@@ -1,6 +1,7 @@
 package com.example.book_shopping.controller;
 
-import com.example.book_shopping.request.ProcedureRequest;
+import com.example.book_shopping.request.CreateProcedureRequest;
+import com.example.book_shopping.request.UpdateProcedureRequest;
 import com.example.book_shopping.service.ProcedureService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,12 +30,12 @@ public class ProcedureController {
     }
 
     @PutMapping("/{procedureId}")
-    public ResponseEntity<Object> updateProcedure(@PathVariable("procedureId") int procedureId, @RequestBody ProcedureRequest request) {
+    public ResponseEntity<Object> updateProcedure(@PathVariable("procedureId") int procedureId, @RequestBody UpdateProcedureRequest request) {
         return ResponseEntity.ok(service.update(procedureId, request));
     }
 
     @PostMapping("")
-    public ResponseEntity<Object> addProcedure(@RequestBody ProcedureRequest request) {
+    public ResponseEntity<Object> addProcedure(@RequestBody CreateProcedureRequest request) {
         return ResponseEntity.ok(service.add(request));
     }
 

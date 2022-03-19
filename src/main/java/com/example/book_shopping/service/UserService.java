@@ -1,15 +1,18 @@
 package com.example.book_shopping.service;
 
+import com.example.book_shopping.entity.Address;
 import com.example.book_shopping.entity.User;
 import com.example.book_shopping.exception.BadRequestException;
 import com.example.book_shopping.exception.DuplicateRecordException;
 import com.example.book_shopping.exception.NotFoundException;
+import com.example.book_shopping.repository.AddressRepository;
 import com.example.book_shopping.repository.UserRepository;
 import com.example.book_shopping.request.SignInRequest;
 import com.example.book_shopping.request.SignUpRequest;
 import com.example.book_shopping.request.UpdateUserRequest;
 import com.example.book_shopping.response.UserDetailResponse;
 import com.example.book_shopping.response.UserResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -21,11 +24,10 @@ import java.util.Optional;
  */
 @Service
 public class UserService {
+    @Autowired
     private UserRepository userRepository;
-
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    @Autowired
+    private AddressRepository addressRepository;
 
     public UserResponse signIn(SignInRequest request) {
         try {
@@ -65,6 +67,14 @@ public class UserService {
                 user.setLastName(request.getLastName().trim());
                 user.setPhoneNumber(request.getPhoneNumber().trim());
                 user = userRepository.save(user);
+
+                Address address = new Address();
+                address.setUser(user);
+                if (request.getAddressDesc() != null) address.setDescription(request.getAddressDesc());
+                address.setAddressDetail(request.getAddress());
+                address.setMain(true);
+                addressRepository.save(address);
+
                 String fullName = user.getLastName() + " " + user.getFirstName();
                 return new UserResponse(user.getId(), fullName, user.isActive(), user.isAdmin());
             }

@@ -47,14 +47,16 @@ public class CategoryService {
 
     public Category add(CreateCategoryRequest request) {
         try {
-            if (categoryRepository.existsByName(request.getName().trim()))
+            if (categoryRepository.existsByName(request.getName().trim())) {
                 throw new DuplicateRecordException("Name was used");
+            }
             Category category = new Category();
             if (request.getDesc() != null) {
                 category.setDescription(request.getDesc().trim());
             }
             category.setName(request.getName().trim());
-            return categoryRepository.save(category);
+            category = categoryRepository.save(category);
+            return category;
         } catch (Exception e) {
             e.printStackTrace();
             throw new BadRequestException(e.getMessage());

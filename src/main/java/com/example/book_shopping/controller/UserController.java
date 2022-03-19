@@ -31,7 +31,7 @@ public class UserController {
     }
 
     @PostMapping("/sign_out/{userId}")
-    public ResponseEntity<Object> signIn(@PathVariable("userId") int userId) {
+    public ResponseEntity<Object> signOut(@PathVariable("userId") int userId) {
         if (service.signOut(userId)) {
             return ResponseEntity.ok(HttpStatus.OK.getReasonPhrase());
         }

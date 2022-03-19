@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.*;
 
@@ -40,7 +41,9 @@ public class ProductService {
             Optional<Category> category = categoryRepository.findById(categoryId);
             if (category.isPresent()) {
                 List<Product> products = productRepository.findAllByCategory(category.get());
-                if (products != null) return toProductResponses(products);
+                if (products != null) {
+                    return toProductResponses(products);
+                }
             }
             throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
 
@@ -138,12 +141,13 @@ public class ProductService {
                 product.setAmount(request.getAmount());
                 product.setCategory(category.get());
                 product.setPrice(request.getPrice());
-                product.setName(request.getName());
+                product.setName(request.getName().trim());
                 product.setProcedure(procedure.get());
                 product.setPublishingYear(request.getPublishingYear());
-                product.setDescription(request.getDescription());
+                product.setDescription(request.getDescription().trim());
                 product.setLanguage(language.get());
-                return toProductResponse(productRepository.save(product));
+                product = productRepository.save(product);
+                return toProductResponse(product);
             }
             throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
 
@@ -248,9 +252,9 @@ public class ProductService {
         response.setName(product.getName());
         response.setActive(product.isActive());
         response.setAmount(product.getAmount());
-        NumberFormat formatter = NumberFormat.getCurrencyInstance();
-        String moneyString = formatter.format(product.getPrice())+ " đ";//revert to VND
-        response.setPrice(moneyString);
+        Locale locale = new Locale("vi", "VN");
+        DecimalFormat decimalFormat = (DecimalFormat) NumberFormat.getNumberInstance(locale);
+        response.setPrice(decimalFormat.format(product.getPrice()) + " đ");//revert to VND
         response.setLanguage(product.getLanguage());
         response.setPublishingYear(product.getPublishingYear());
         response.setCategory(product.getCategory());

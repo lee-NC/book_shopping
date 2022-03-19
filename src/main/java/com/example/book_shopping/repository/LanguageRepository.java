@@ -4,14 +4,11 @@ import com.example.book_shopping.entity.Language;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import javax.transaction.Transactional;
-
 /**
  * @author lengo
  * created on 3/19/2022
  */
 @Repository
-@Transactional
 public interface LanguageRepository extends JpaRepository<Language, Integer> {
     boolean existsByName(String name);
 }

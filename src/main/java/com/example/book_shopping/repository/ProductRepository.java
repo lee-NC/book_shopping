@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -16,7 +15,6 @@ import java.util.List;
  * created on 3/18/2022
  */
 @Repository
-@Transactional
 public interface ProductRepository extends JpaRepository<Product, Integer> {
     List<Product> findAllByCategory(Category category);
 

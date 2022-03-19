@@ -5,10 +5,12 @@ import com.example.book_shopping.exception.BadRequestException;
 import com.example.book_shopping.exception.DuplicateRecordException;
 import com.example.book_shopping.exception.NotFoundException;
 import com.example.book_shopping.repository.ProcedureRepository;
-import com.example.book_shopping.request.ProcedureRequest;
+import com.example.book_shopping.request.CreateProcedureRequest;
+import com.example.book_shopping.request.UpdateProcedureRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,8 +19,13 @@ import java.util.Optional;
  * created on 3/19/2022
  */
 @Service
+@Transactional
 public class ProcedureService {
-    private ProcedureRepository procedureRepository;
+    private final ProcedureRepository procedureRepository;
+
+    public ProcedureService(ProcedureRepository procedureRepository) {
+        this.procedureRepository = procedureRepository;
+    }
 
     public List<Procedure> getAll() {
         try {
@@ -40,23 +47,23 @@ public class ProcedureService {
         }
     }
 
-    public Procedure add(ProcedureRequest request) {
+    public Procedure add(CreateProcedureRequest request) {
         try {
-            if (procedureRepository.existsByName(request.getName().trim()))
+            if (procedureRepository.existsByName(request.getName().trim())) {
                 throw new DuplicateRecordException("Name was used");
-            Procedure procedure = new Procedure();
-            if (request.getCountry() != null) {
-                procedure.setCountry(request.getCountry().trim());
             }
+            Procedure procedure = new Procedure();
+            procedure.setCountry(request.getCountry().trim());
             procedure.setName(request.getName().trim());
-            return procedureRepository.save(procedure);
+            procedure = procedureRepository.save(procedure);
+            return procedure;
         } catch (Exception e) {
             e.printStackTrace();
             throw new BadRequestException(e.getMessage());
         }
     }
 
-    public Procedure update(int id, ProcedureRequest request) {
+    public Procedure update(int id, UpdateProcedureRequest request) {
         try {
             Optional<Procedure> procedure = procedureRepository.findById(id);
             if (procedure.isPresent()) {

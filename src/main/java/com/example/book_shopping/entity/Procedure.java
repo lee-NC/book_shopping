@@ -1,18 +1,11 @@
 package com.example.book_shopping.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 
 /**
  * @author lengo
  * created on 3/18/2022
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity(name = "procedures")
 public class Procedure {
     @Id
@@ -22,4 +15,31 @@ public class Procedure {
     private String name;
     @Column(nullable = false)
     private String country;
+
+    public Procedure() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
 }

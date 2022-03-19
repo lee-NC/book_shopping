@@ -1,16 +1,22 @@
 package com.example.book_shopping.repository;
 
 import com.example.book_shopping.entity.Cart;
+import com.example.book_shopping.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import javax.transaction.Transactional;
+import java.util.List;
 
 /**
  * @author lengo
  * created on 3/18/2022
  */
 @Repository
-@Transactional
 public interface CartRepository extends JpaRepository<Cart, Integer> {
+    @Query(value = "SELECT c FROM carts c " +
+            "WHERE c.user = ?1 " +
+            "GROUP BY c.product.id",
+            countQuery = "SELECT count(c) FROM carts c")
+    List<Cart> findAllByUserOrderByProcedureId(User user);
 }

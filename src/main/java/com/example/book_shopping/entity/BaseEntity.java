@@ -1,6 +1,5 @@
 package com.example.book_shopping.entity;
 
-import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -13,7 +12,6 @@ import java.sql.Timestamp;
  * @author lengo
  * created on 3/19/2022
  */
-@Getter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public abstract class BaseEntity implements Serializable {
@@ -26,4 +24,19 @@ public abstract class BaseEntity implements Serializable {
     @LastModifiedDate
     @Column()
     private Timestamp updatedAt;
+
+    public BaseEntity() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public Timestamp getCreatedAt() {
+        return createdAt;
+    }
+
+    public Timestamp getUpdatedAt() {
+        return updatedAt;
+    }
 }

@@ -35,11 +35,13 @@ public class LanguageService {
 
     public Language add(StringRequest request) {
         try {
-            if (languageRepository.existsByName(request.getText().trim()))
+            if (languageRepository.existsByName(request.getText().trim())) {
                 throw new DuplicateRecordException("Name was used");
+            }
             Language language = new Language();
             language.setName(request.getText().trim());
-            return languageRepository.save(language);
+            language = languageRepository.save(language);
+            return language;
         } catch (Exception e) {
             e.printStackTrace();
             throw new BadRequestException(e.getMessage());

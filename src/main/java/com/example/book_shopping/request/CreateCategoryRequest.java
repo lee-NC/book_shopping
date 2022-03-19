@@ -1,15 +1,21 @@
 package com.example.book_shopping.request;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
 /**
  * @author lengo
  * created on 3/19/2022
  */
-@Getter
-@NoArgsConstructor
 public class CreateCategoryRequest {
     private String name;
     private String desc;
+
+    public CreateCategoryRequest() {
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
 }
