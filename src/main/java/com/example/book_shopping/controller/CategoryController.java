@@ -1,7 +1,7 @@
 package com.example.book_shopping.controller;
 
 import com.example.book_shopping.request.CreateCategoryRequest;
-import com.example.book_shopping.request.UpdateCategoryRequest;
+import com.example.book_shopping.request.StringRequest;
 import com.example.book_shopping.service.CategoryService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +15,11 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin("*")
 @RequestMapping("/categories")
 public class CategoryController {
-    private CategoryService service;
+    private final CategoryService service;
+
+    public CategoryController(CategoryService service) {
+        this.service = service;
+    }
 
     @GetMapping("/{categoryId}")
     public ResponseEntity<Object> getCategory(@PathVariable("categoryId") int categoryId) {
@@ -23,7 +27,7 @@ public class CategoryController {
     }
 
     @PutMapping("/{categoryId}")
-    public ResponseEntity<Object> updateCategory(@PathVariable("categoryId") int categoryId, @RequestBody UpdateCategoryRequest request) {
+    public ResponseEntity<Object> updateCategory(@PathVariable("categoryId") int categoryId, @RequestBody StringRequest request) {
         return ResponseEntity.ok(service.update(categoryId, request));
     }
 

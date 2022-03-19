@@ -79,7 +79,7 @@ public class AddressService {
             Optional<Address> address = addressRepository.findById(id);
             if (address.isPresent()) {
                 Address data = address.get();
-                if (data.isMain()) {
+                if (!data.isMain()) {
                     List<Address> addresses = addressRepository.findAllByUser(data.getUser());
                     if (addresses != null) {
                         for (Address check : addresses) {
@@ -90,10 +90,9 @@ public class AddressService {
                             }
                         }
                     }
+                    data.setMain(true);
+                    return addressRepository.save(data);
                 }
-                data.setMain(true);
-                data = addressRepository.save(data);
-                return data;
             }
             throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
         } catch (Exception e) {

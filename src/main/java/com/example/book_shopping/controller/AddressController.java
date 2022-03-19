@@ -10,8 +10,15 @@ import org.springframework.web.bind.annotation.*;
  * @author lengo
  * created on 3/19/2022
  */
+@RestController
+@CrossOrigin("*")
+@RequestMapping("/addresses")
 public class AddressController {
-    private AddressService service;
+    private final AddressService service;
+
+    public AddressController(AddressService service) {
+        this.service = service;
+    }
 
 
     @PutMapping("/{addressId}")

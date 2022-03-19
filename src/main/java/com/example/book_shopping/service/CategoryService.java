@@ -6,7 +6,7 @@ import com.example.book_shopping.exception.DuplicateRecordException;
 import com.example.book_shopping.exception.NotFoundException;
 import com.example.book_shopping.repository.CategoryRepository;
 import com.example.book_shopping.request.CreateCategoryRequest;
-import com.example.book_shopping.request.UpdateCategoryRequest;
+import com.example.book_shopping.request.StringRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -19,14 +19,10 @@ import java.util.Optional;
  */
 @Service
 public class CategoryService {
-    private CategoryRepository categoryRepository;
+    private final CategoryRepository categoryRepository;
 
-    public boolean existById(int id) {
-        try {
-            return categoryRepository.existsById(id);
-        } catch (Exception e) {
-            throw new BadRequestException(e.getMessage());
-        }
+    public CategoryService(CategoryRepository categoryRepository) {
+        this.categoryRepository = categoryRepository;
     }
 
     public List<Category> getAll() {
@@ -62,11 +58,11 @@ public class CategoryService {
         }
     }
 
-    public Category update(int id, UpdateCategoryRequest request) {
+    public Category update(int id, StringRequest request) {
         try {
             Optional<Category> category = categoryRepository.findById(id);
-            if (category.isPresent() && request.getDesc() != null && !category.get().getDescription().equals(request.getDesc().trim())) {
-                category.get().setDescription(request.getDesc().trim());
+            if (category.isPresent() && request.getText() != null && !category.get().getDescription().equals(request.getText().trim())) {
+                category.get().setDescription(request.getText().trim());
                 return categoryRepository.save(category.get());
             }
             throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());

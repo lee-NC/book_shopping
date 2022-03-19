@@ -20,15 +20,6 @@ import java.util.Optional;
 public class ProcedureService {
     private ProcedureRepository procedureRepository;
 
-
-    public boolean existById(int id) {
-        try {
-            return procedureRepository.existsById(id);
-        } catch (Exception e) {
-            throw new BadRequestException(e.getMessage());
-        }
-    }
-
     public List<Procedure> getAll() {
         try {
             return procedureRepository.findAll();

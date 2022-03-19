@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
  */
 @Getter
 @NoArgsConstructor
-public class UpdateCategoryRequest {
-    private String desc;
+public class StringRequest {
+    private String text;
 }

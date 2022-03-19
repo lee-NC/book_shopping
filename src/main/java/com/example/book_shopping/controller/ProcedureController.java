@@ -14,7 +14,11 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin("*")
 @RequestMapping("/procedures")
 public class ProcedureController {
-    private ProcedureService service;
+    private final ProcedureService service;
+
+    public ProcedureController(ProcedureService service) {
+        this.service = service;
+    }
 
     @GetMapping("/{procedureId}")
     public ResponseEntity<Object> getProcedure(@PathVariable("procedureId") int procedureId) {
