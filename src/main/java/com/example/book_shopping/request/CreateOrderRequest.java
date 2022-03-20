@@ -1,5 +1,8 @@
 package com.example.book_shopping.request;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 import java.util.Set;
 
 /**
@@ -7,7 +10,11 @@ import java.util.Set;
  * created on 3/20/2022
  */
 public class CreateOrderRequest {
-    private Set<Integer> cartIds;
+    @Size(max = 100)
+    @NotNull
+    private Set<@Positive Integer> cartIds;
+    @NotNull
+    @Positive
     private int addressId;
 
     public CreateOrderRequest() {

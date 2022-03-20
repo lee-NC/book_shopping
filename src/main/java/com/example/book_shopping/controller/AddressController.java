@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 /**
  * @author lengo
  * created on 3/19/2022
@@ -25,12 +27,12 @@ public class AddressController {
 
 
     @PutMapping("/{addressId}")
-    public ResponseEntity<Object> updateAddress(@PathVariable("addressId") int addressId, @RequestBody AddressRequest request) {
+    public ResponseEntity<Object> updateAddress(@PathVariable("addressId") int addressId, @Valid @RequestBody AddressRequest request) {
         return ResponseEntity.ok(service.update(addressId, request));
     }
 
     @PostMapping("/{userId}")
-    public ResponseEntity<Object> addAddress(@PathVariable("userId") int userId, @RequestBody AddressRequest request) {
+    public ResponseEntity<Object> addAddress(@PathVariable("userId") int userId, @Valid @RequestBody AddressRequest request) {
         return ResponseEntity.ok(service.add(userId, request));
     }
 

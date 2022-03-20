@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 /**
  * @author lengo
  * created on 3/18/2022
@@ -26,7 +28,7 @@ public class UserController {
     }
 
     @PostMapping("/sign_in")
-    public ResponseEntity<Object> signIn(@RequestBody SignInRequest request) {
+    public ResponseEntity<Object> signIn(@Valid @RequestBody SignInRequest request) {
         return ResponseEntity.ok(service.signIn(request));
     }
 
@@ -39,7 +41,7 @@ public class UserController {
     }
 
     @PostMapping("/sign_up")
-    public ResponseEntity<Object> signUp(@RequestBody SignUpRequest request) {
+    public ResponseEntity<Object> signUp(@Valid @RequestBody SignUpRequest request) {
         return ResponseEntity.ok(service.signUp(request));
     }
 
@@ -54,7 +56,7 @@ public class UserController {
     }
 
     @PutMapping("/{userId}")
-    public ResponseEntity<Object> updateUser(@PathVariable("userId") int userId, @RequestBody UpdateUserRequest request) {
+    public ResponseEntity<Object> updateUser(@PathVariable("userId") int userId, @Valid @RequestBody UpdateUserRequest request) {
         return ResponseEntity.ok(service.update(userId, request));
     }
 

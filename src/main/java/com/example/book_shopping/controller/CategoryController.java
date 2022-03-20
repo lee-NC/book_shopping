@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 /**
  * @author lengo
  * created on 3/18/2022
@@ -30,12 +32,12 @@ public class CategoryController {
     }
 
     @PutMapping("/{categoryId}")
-    public ResponseEntity<Object> updateCategory(@PathVariable("categoryId") int categoryId, @RequestBody StringRequest request) {
+    public ResponseEntity<Object> updateCategory(@PathVariable("categoryId") int categoryId, @Valid @RequestBody StringRequest request) {
         return ResponseEntity.ok(service.update(categoryId, request));
     }
 
     @PostMapping("")
-    public ResponseEntity<Object> addCategory(@RequestBody CreateCategoryRequest request) {
+    public ResponseEntity<Object> addCategory(@Valid @RequestBody CreateCategoryRequest request) {
         return ResponseEntity.ok(service.add(request));
     }
 

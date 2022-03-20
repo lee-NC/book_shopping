@@ -10,7 +10,6 @@ import java.util.List;
  */
 public class ListOderResponse {
     private int userId;
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private List<OrderResponse> orderResponses;
 
     public ListOderResponse(int userId, List<OrderResponse> orderResponses) {

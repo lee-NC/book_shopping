@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 /**
  * @author lengo
  * created on 3/18/2022
@@ -24,12 +26,12 @@ public class LanguageController {
     }
 
     @PutMapping("/{languageId}")
-    public ResponseEntity<Object> updateLanguage(@PathVariable("languageId") int languageId, @RequestBody StringRequest request) {
+    public ResponseEntity<Object> updateLanguage(@PathVariable("languageId") int languageId, @Valid @RequestBody StringRequest request) {
         return ResponseEntity.ok(service.update(languageId, request));
     }
 
     @PostMapping("")
-    public ResponseEntity<Object> addLanguage(@RequestBody StringRequest request) {
+    public ResponseEntity<Object> addLanguage(@Valid @RequestBody StringRequest request) {
         return ResponseEntity.ok(service.add(request));
     }
 

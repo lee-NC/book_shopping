@@ -14,14 +14,11 @@ public class ProductResponse {
     private String name;
     private String desc;
     private int publishingYear;
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Language language;
     private String price;
     private int amount;
     private boolean isActive;
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Procedure procedure;
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Category category;
 
     public ProductResponse() {

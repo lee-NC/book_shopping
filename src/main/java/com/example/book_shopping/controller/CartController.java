@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 /**
  * @author lengo
  * created on 3/20/2022
@@ -35,12 +37,12 @@ public class CartController {
     }
 
     @PostMapping("/{userId}")
-    public ResponseEntity<Object> addCartByUserId(@PathVariable("userId") int userId, @RequestBody CreateCartRequest request) {
+    public ResponseEntity<Object> addCartByUserId(@PathVariable("userId") int userId, @Valid @RequestBody CreateCartRequest request) {
         return service.add(userId, request) ? ResponseEntity.ok(HttpStatus.OK.getReasonPhrase()) : ResponseEntity.badRequest().body(HttpStatus.BAD_REQUEST.getReasonPhrase());
     }
 
     @PostMapping("/{cartId}")
-    public ResponseEntity<Object> updateCart(@PathVariable("cartId") int cartId, @RequestBody UpdateCartRequest request) {
+    public ResponseEntity<Object> updateCart(@PathVariable("cartId") int cartId, @Valid @RequestBody UpdateCartRequest request) {
         return ResponseEntity.ok(service.update(cartId, request));
     }
 

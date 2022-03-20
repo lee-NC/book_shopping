@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 /**
  * @author lengo
  * created on 3/19/2022
@@ -61,12 +63,12 @@ public class ProductController {
     }
 
     @PutMapping("/{productId}")
-    public ResponseEntity<Object> updateProduct(@PathVariable("productId") int productId, @RequestBody UpdateProductRequest request) {
+    public ResponseEntity<Object> updateProduct(@PathVariable("productId") int productId, @Valid @RequestBody UpdateProductRequest request) {
         return ResponseEntity.ok(service.update(productId, request));
     }
 
     @PostMapping("")
-    public ResponseEntity<Object> addProduct(@RequestBody CreateProductRequest request) {
+    public ResponseEntity<Object> addProduct(@Valid @RequestBody CreateProductRequest request) {
         return ResponseEntity.ok(service.add(request));
     }
 

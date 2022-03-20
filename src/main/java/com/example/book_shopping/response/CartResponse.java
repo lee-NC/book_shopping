@@ -9,7 +9,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class CartResponse {
     private int id;
     private int amount;
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private ProductCartResponse productResponse;
 
     public CartResponse() {

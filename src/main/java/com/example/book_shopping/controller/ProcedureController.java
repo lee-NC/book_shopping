@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 /**
  * @author lengo
  * created on 3/18/2022
@@ -30,12 +32,12 @@ public class ProcedureController {
     }
 
     @PutMapping("/{procedureId}")
-    public ResponseEntity<Object> updateProcedure(@PathVariable("procedureId") int procedureId, @RequestBody UpdateProcedureRequest request) {
+    public ResponseEntity<Object> updateProcedure(@PathVariable("procedureId") int procedureId, @Valid @RequestBody UpdateProcedureRequest request) {
         return ResponseEntity.ok(service.update(procedureId, request));
     }
 
     @PostMapping("")
-    public ResponseEntity<Object> addProcedure(@RequestBody CreateProcedureRequest request) {
+    public ResponseEntity<Object> addProcedure(@Valid @RequestBody CreateProcedureRequest request) {
         return ResponseEntity.ok(service.add(request));
     }
 

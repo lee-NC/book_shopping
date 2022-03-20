@@ -16,7 +16,6 @@ public class OrderResponse {
     private String value;
     private String status;
     private Date createAt;
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private List<OrderProductResponse> productResponses;
 
     public OrderResponse() {

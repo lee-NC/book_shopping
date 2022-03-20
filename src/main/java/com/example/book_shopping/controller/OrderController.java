@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Locale;
 
 /**
@@ -15,7 +16,7 @@ import java.util.Locale;
  */
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/addresses")
+@RequestMapping("/orders")
 public class OrderController {
     private final OrderService service;
 
@@ -35,7 +36,7 @@ public class OrderController {
     }
 
     @PostMapping("/{userId}")
-    public ResponseEntity<Object> addOrder(@PathVariable("userId") int userId, @RequestBody CreateOrderRequest request) {
+    public ResponseEntity<Object> addOrder(@PathVariable("userId") int userId, @Valid @RequestBody CreateOrderRequest request) {
         return ResponseEntity.ok(service.add(userId, request));
     }
 
