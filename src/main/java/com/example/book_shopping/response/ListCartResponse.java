@@ -9,22 +9,21 @@ import java.util.List;
  * created on 3/20/2022
  */
 public class ListCartResponse {
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private UserCartResponse userCartResponse;
+    private int userId;
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private List<CartResponse> cartResponses;
 
-    public ListCartResponse(UserCartResponse userCartResponse, List<CartResponse> cartResponses) {
-        this.userCartResponse = userCartResponse;
+    public ListCartResponse(int userId, List<CartResponse> cartResponses) {
+        this.userId = userId;
         this.cartResponses = cartResponses;
     }
 
-    public UserCartResponse getUserCartResponse() {
-        return userCartResponse;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUserCartResponse(UserCartResponse userCartResponse) {
-        this.userCartResponse = userCartResponse;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public List<CartResponse> getCartResponses() {

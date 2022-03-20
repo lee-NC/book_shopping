@@ -17,10 +17,10 @@ import java.util.List;
 public interface CartRepository extends JpaRepository<Cart, Integer> {
     @Query(value = "SELECT c FROM carts c " +
             "WHERE c.user = ?1 " +
-            "GROUP BY c.product.id " +
+            "GROUP BY c.product.procedure " +
             "ORDER BY c.updatedAt",
             countQuery = "SELECT count(c) FROM carts c")
-    List<Cart> findAllByUserGroupByProcedureIdOrderByUpdatedAt(User user);
+    List<Cart> findAllByUserGroupByProcedureOrderByUpdatedAt(User user);
 
     Cart findByUserAndProduct(User user, Product product);
 }

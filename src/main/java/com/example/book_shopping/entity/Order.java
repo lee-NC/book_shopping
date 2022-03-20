@@ -1,6 +1,8 @@
 package com.example.book_shopping.entity;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author lengo
@@ -8,9 +10,12 @@ import javax.persistence.*;
  */
 @Entity(name = "orders")
 public class Order extends BaseEntity {
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id", referencedColumnName = "id", nullable = false)
+    private Set<OrderProduct> orderProducts;
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "cartId", referencedColumnName = "id", nullable = false)
-    private Cart cart;
+    @JoinColumn(name = "address_id", referencedColumnName = "id", nullable = false)
+    private Address address;
     @Column(nullable = false)
     private double value;
     @Column(nullable = false)
@@ -19,12 +24,20 @@ public class Order extends BaseEntity {
     public Order() {
     }
 
-    public Cart getCart() {
-        return cart;
+    public Set<OrderProduct> getOrderProducts() {
+        return orderProducts;
     }
 
-    public void setCart(Cart cart) {
-        this.cart = cart;
+    public void setOrderProducts(Set<OrderProduct> orderProducts) {
+        this.orderProducts = orderProducts;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     public double getValue() {

@@ -10,7 +10,7 @@ public class CartResponse {
     private int id;
     private int amount;
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private ProductCartResponse productCartResponse;
+    private ProductCartResponse productResponse;
 
     public CartResponse() {
     }
@@ -31,11 +31,11 @@ public class CartResponse {
         this.amount = amount;
     }
 
-    public ProductCartResponse getProductCartResponse() {
-        return productCartResponse;
+    public ProductCartResponse getProductResponse() {
+        return productResponse;
     }
 
-    public void setProductCartResponse(ProductCartResponse productCartResponse) {
-        this.productCartResponse = productCartResponse;
+    public void setProductResponse(ProductCartResponse productResponse) {
+        this.productResponse = productResponse;
     }
 }

@@ -35,17 +35,17 @@ public class CartService {
     @Autowired
     private UserRepository userRepository;
 
-    public ListCartResponse getAll(int userId) {
+    public ListCartResponse getAllByUser(int userId) {
         try {
-            User user = userRepository.findByIdAndIsActive(userId, true);
+            User user = userRepository.findByIdAndIsActiveAndIsAdmin(userId, true, false);
             if (user != null) {
-                List<Cart> carts = cartRepository.findAllByUserGroupByProcedureIdOrderByUpdatedAt(user);
+                List<Cart> carts = cartRepository.findAllByUserGroupByProcedureOrderByUpdatedAt(user);
                 if (carts == null) throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
                 List<CartResponse> cartResponses = new ArrayList<>();
                 for (Cart cart : carts) {
                     cartResponses.add(toCartResponse(cart));
                 }
-                return new ListCartResponse(toUserCartResponse(user), cartResponses);
+                return new ListCartResponse(userId, cartResponses);
             }
             throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
         } catch (Exception e) {
@@ -56,7 +56,7 @@ public class CartService {
 
     public boolean add(int userId, CreateCartRequest request) {
         try {
-            User user = userRepository.findByIdAndIsActive(userId, true);
+            User user = userRepository.findByIdAndIsActiveAndIsAdmin(userId, true, false);
             Product product = productRepository.findByIdAndIsActive(request.getProductId(), true);
             if (user != null && request.getAmount() <= product.getAmount()){
                 Cart data = cartRepository.findByUserAndProduct(user, product);
@@ -115,11 +115,6 @@ public class CartService {
         }
     }
 
-    private UserCartResponse toUserCartResponse(User user) {
-        String fullName = user.getLastName() + " " + user.getFirstName();
-        return new UserCartResponse(user.getId(), fullName);
-    }
-
     private ProductCartResponse toProductCartResponse(Product product) {
         ProductCartResponse response = new ProductCartResponse();
         response.setId(product.getId());
@@ -130,6 +125,8 @@ public class CartService {
         response.setAmountAvailable(product.getAmount());
         response.setName(product.getName());
         response.setProcedureName(product.getProcedure().getName());
+        response.setProcedureId(product.getProcedure().getId());
+        response.setProcedureId(product.getProcedure().getId());
         return response;
     }
 
@@ -137,7 +134,7 @@ public class CartService {
         CartResponse response = new CartResponse();
         response.setAmount(cart.getAmount());
         response.setId(cart.getId());
-        response.setProductCartResponse(toProductCartResponse(cart.getProduct()));
+        response.setProductResponse(toProductCartResponse(cart.getProduct()));
         return response;
     }
 

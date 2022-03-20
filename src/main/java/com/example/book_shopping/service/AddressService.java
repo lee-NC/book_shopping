@@ -27,7 +27,7 @@ public class AddressService {
 
     public List<Address> getAll(int userId) {
         try {
-            User user = userRepository.findByIdAndIsActive(userId, true);
+            User user = userRepository.findByIdAndIsActiveAndIsAdmin(userId, true, false);
             if (user != null) {
                 List<Address> addresses = addressRepository.findAllByUser(user);
                 if (addresses == null) throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
@@ -62,7 +62,7 @@ public class AddressService {
 
     public Address add(int userId, AddressRequest request) {
         try {
-            User user = userRepository.findByIdAndIsActive(userId, true);
+            User user = userRepository.findByIdAndIsActiveAndIsAdmin(userId, true, false);
             if (user != null) {
                 Address address = new Address();
                 address.setAddressDetail(request.getAddressDetail().trim());

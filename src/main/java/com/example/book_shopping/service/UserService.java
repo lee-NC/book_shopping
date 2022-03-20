@@ -88,7 +88,7 @@ public class UserService {
 
     public UserDetailResponse get(int userId) {
         try {
-            User user = userRepository.findByIdAndIsActive(userId, true);
+            User user = userRepository.findByIdAndIsActiveAndIsAdmin(userId, true, false);
             if (user != null) {
                 return toUserDetailResponse(user);
             }
@@ -102,7 +102,7 @@ public class UserService {
 
     public UserDetailResponse update(int userId, UpdateUserRequest request) {
         try {
-            User user = userRepository.findByIdAndIsActive(userId, true);
+            User user = userRepository.findByIdAndIsActiveAndIsAdmin(userId, true, false);
             if (user != null) {
                 if (request.getEmail() != null && !user.getEmail().equals(request.getEmail())) {
                     if (userRepository.existsByEmail(request.getEmail()))

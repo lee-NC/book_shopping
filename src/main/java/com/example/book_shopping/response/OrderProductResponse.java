@@ -4,16 +4,16 @@ package com.example.book_shopping.response;
  * @author lengo
  * created on 3/20/2022
  */
-public class ProductCartResponse {
+public class OrderProductResponse {
     private int id;
     private String name;
     private String price;
-    private int amountAvailable;
+    private int amount;
     private boolean isActive;
     private String procedureName;
     private int procedureId;
 
-    public ProductCartResponse() {
+    public OrderProductResponse() {
     }
 
     public int getId() {
@@ -40,12 +40,12 @@ public class ProductCartResponse {
         this.price = price;
     }
 
-    public int getAmountAvailable() {
-        return amountAvailable;
+    public int getAmount() {
+        return amount;
     }
 
-    public void setAmountAvailable(int amountAvailable) {
-        this.amountAvailable = amountAvailable;
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 
     public boolean isActive() {
