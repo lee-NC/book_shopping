@@ -35,7 +35,7 @@ public class UserController {
         if (service.signOut(userId)) {
             return ResponseEntity.ok(HttpStatus.OK.getReasonPhrase());
         }
-        return ResponseEntity.ok(HttpStatus.BAD_REQUEST.getReasonPhrase());
+        return ResponseEntity.badRequest().body(HttpStatus.BAD_REQUEST.getReasonPhrase());
     }
 
     @PostMapping("/sign_up")

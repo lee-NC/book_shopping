@@ -14,4 +14,5 @@ import java.util.List;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Integer> {
     List<Order> findAllByAddress(Address address);
+    List<Order> findAllByAddressAndStatus(Address address,String status);
 }

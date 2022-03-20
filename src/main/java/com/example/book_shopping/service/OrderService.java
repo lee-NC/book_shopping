@@ -32,14 +32,14 @@ public class OrderService {
     Locale locale = new Locale("vi", "VN");
     DecimalFormat decimalFormat = (DecimalFormat) NumberFormat.getNumberInstance(locale);
 
-    public ListOderResponse getAllSubmit(int userId){
+    public ListOderResponse getAllByStatus(int userId, String status){
         try {
             User user = userRepository.findByIdAndIsActiveAndIsAdmin(userId, true, false);
-            if (user != null) {
+            if (user != null ) {
                 List<Address> addresses = addressRepository.findAllByUser(user);
                 List<Order> orders= new ArrayList<>();
                 for (Address address: addresses){
-                    orders.addAll(orderRepository.findAllByAddress(address));
+                    orders.addAll(orderRepository.findAllByAddressAndStatus(address, status));
                 }
                 return new ListOderResponse(userId, toOrderResponses(orders));
             }

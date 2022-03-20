@@ -46,6 +46,6 @@ public class ProcedureController {
 
     @DeleteMapping("/{procedureId}")
     public ResponseEntity<Object> deleteProcedure(@PathVariable("procedureId") int procedureId) {
-        return service.delete(procedureId) ? ResponseEntity.ok(HttpStatus.OK.getReasonPhrase()) : ResponseEntity.ok(HttpStatus.BAD_REQUEST.getReasonPhrase());
+        return service.delete(procedureId) ? ResponseEntity.ok(HttpStatus.OK.getReasonPhrase()) : ResponseEntity.badRequest().body(HttpStatus.BAD_REQUEST.getReasonPhrase());
     }
 }

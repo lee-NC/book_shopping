@@ -31,7 +31,7 @@ public class CartController {
 
     @PostMapping("/{userId}")
     public ResponseEntity<Object> addCartByUserId(@PathVariable("userId") int userId, @RequestBody CreateCartRequest request) {
-        return cartService.add(userId, request) ? ResponseEntity.ok(HttpStatus.OK.getReasonPhrase()) : ResponseEntity.ok(HttpStatus.BAD_REQUEST.getReasonPhrase());
+        return cartService.add(userId, request) ? ResponseEntity.ok(HttpStatus.OK.getReasonPhrase()) : ResponseEntity.badRequest().body(HttpStatus.BAD_REQUEST.getReasonPhrase());
     }
 
     @PostMapping("/{cartId}")
@@ -41,6 +41,6 @@ public class CartController {
 
     @DeleteMapping("/{cartId}")
     public ResponseEntity<Object> deleteCart(@PathVariable("cartId") int cartId) {
-        return cartService.delete(cartId) ? ResponseEntity.ok(HttpStatus.OK.getReasonPhrase()) : ResponseEntity.ok(HttpStatus.BAD_REQUEST.getReasonPhrase());
+        return cartService.delete(cartId) ? ResponseEntity.ok(HttpStatus.OK.getReasonPhrase()) : ResponseEntity.badRequest().body(HttpStatus.BAD_REQUEST.getReasonPhrase());
     }
 }

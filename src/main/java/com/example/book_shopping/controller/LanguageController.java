@@ -40,6 +40,6 @@ public class LanguageController {
 
     @DeleteMapping("/{languageId}")
     public ResponseEntity<Object> deleteLanguage(@PathVariable("languageId") int languageId) {
-        return service.delete(languageId) ? ResponseEntity.ok(HttpStatus.OK.getReasonPhrase()) : ResponseEntity.ok(HttpStatus.BAD_REQUEST.getReasonPhrase());
+        return service.delete(languageId) ? ResponseEntity.ok(HttpStatus.OK.getReasonPhrase()) : ResponseEntity.badRequest().body(HttpStatus.BAD_REQUEST.getReasonPhrase());
     }
 }
