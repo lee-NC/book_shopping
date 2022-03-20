@@ -17,30 +17,35 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin("*")
 @RequestMapping("/carts")
 public class CartController {
-    private final CartService cartService;
+    private final CartService service;
     Logger logger = LoggerFactory.getLogger(CartController.class);
 
-    public CartController(CartService cartService) {
-        this.cartService = cartService;
+    public CartController(CartService service) {
+        this.service = service;
     }
 
     @GetMapping("/all/{userId}")
     public ResponseEntity<Object> getAllCartByUserId(@PathVariable("userId") int userId) {
-        return ResponseEntity.ok(cartService.getAllByUser(userId));
+        return ResponseEntity.ok(service.getAllByUser(userId));
+    }
+
+    @GetMapping("")
+    public ResponseEntity<Object> getAllUser() {
+        return ResponseEntity.ok(service.getAllCart());
     }
 
     @PostMapping("/{userId}")
     public ResponseEntity<Object> addCartByUserId(@PathVariable("userId") int userId, @RequestBody CreateCartRequest request) {
-        return cartService.add(userId, request) ? ResponseEntity.ok(HttpStatus.OK.getReasonPhrase()) : ResponseEntity.badRequest().body(HttpStatus.BAD_REQUEST.getReasonPhrase());
+        return service.add(userId, request) ? ResponseEntity.ok(HttpStatus.OK.getReasonPhrase()) : ResponseEntity.badRequest().body(HttpStatus.BAD_REQUEST.getReasonPhrase());
     }
 
     @PostMapping("/{cartId}")
     public ResponseEntity<Object> updateCart(@PathVariable("cartId") int cartId, @RequestBody UpdateCartRequest request) {
-        return ResponseEntity.ok(cartService.update(cartId, request));
+        return ResponseEntity.ok(service.update(cartId, request));
     }
 
     @DeleteMapping("/{cartId}")
     public ResponseEntity<Object> deleteCart(@PathVariable("cartId") int cartId) {
-        return cartService.delete(cartId) ? ResponseEntity.ok(HttpStatus.OK.getReasonPhrase()) : ResponseEntity.badRequest().body(HttpStatus.BAD_REQUEST.getReasonPhrase());
+        return service.delete(cartId) ? ResponseEntity.ok(HttpStatus.OK.getReasonPhrase()) : ResponseEntity.badRequest().body(HttpStatus.BAD_REQUEST.getReasonPhrase());
     }
 }

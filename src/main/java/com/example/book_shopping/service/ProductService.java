@@ -121,6 +121,15 @@ public class ProductService {
         }
     }
 
+    public List<Product> getAllProduct() {
+        try {
+            return productRepository.findAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new BadRequestException(e.getMessage());
+        }
+    }
+
     public ProductResponse get(int id) {
         try {
             Optional<Product> product = productRepository.findById(id);

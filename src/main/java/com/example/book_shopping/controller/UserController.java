@@ -48,8 +48,18 @@ public class UserController {
         return ResponseEntity.ok(service.get(userId));
     }
 
+    @GetMapping("")
+    public ResponseEntity<Object> getAllUser() {
+        return ResponseEntity.ok(service.getAllUser());
+    }
+
     @PutMapping("/{userId}")
     public ResponseEntity<Object> updateUser(@PathVariable("userId") int userId, @RequestBody UpdateUserRequest request) {
         return ResponseEntity.ok(service.update(userId, request));
+    }
+
+    @PutMapping("/status/{userId}")
+    public ResponseEntity<Object> changeStatus(@PathVariable("userId") int userId) {
+        return service.changeActive(userId) ? ResponseEntity.ok(HttpStatus.OK.getReasonPhrase()) : ResponseEntity.badRequest().body(HttpStatus.BAD_REQUEST.getReasonPhrase());
     }
 }

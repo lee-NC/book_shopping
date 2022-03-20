@@ -6,7 +6,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * @author lengo
@@ -20,10 +20,10 @@ public abstract class BaseEntity implements Serializable {
     private int id;
     @CreatedDate
     @Column(nullable = false, updatable = false)
-    private Timestamp createdAt;
+    private Date createdAt;
     @LastModifiedDate
     @Column()
-    private Timestamp updatedAt;
+    private Date updatedAt;
 
     public BaseEntity() {
     }
@@ -32,11 +32,23 @@ public abstract class BaseEntity implements Serializable {
         return id;
     }
 
-    public Timestamp getCreatedAt() {
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public Timestamp getUpdatedAt() {
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
         return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

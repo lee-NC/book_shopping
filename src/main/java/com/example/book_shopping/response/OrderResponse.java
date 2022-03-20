@@ -2,6 +2,7 @@ package com.example.book_shopping.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -14,10 +15,19 @@ public class OrderResponse {
     private String addressDesc;
     private String value;
     private String status;
+    private Date createAt;
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private List<OrderProductResponse> productResponses;
 
     public OrderResponse() {
+    }
+
+    public Date getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
     }
 
     public String getAddress() {

@@ -8,4 +8,5 @@ public class DefineString {
     public static final String SUBMITTING = "SUBMITTING";//wait for confirmation
     public static final String DELIVERING = "DELIVERING";//delivery is in progress
     public static final String DELIVERED = "DELIVERED";//Item has been delivered
+    public static final String CANCELLED = "CANCELLED";//order was cancelled
 }

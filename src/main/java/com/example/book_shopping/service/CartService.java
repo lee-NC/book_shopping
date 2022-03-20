@@ -83,6 +83,15 @@ public class CartService {
         }
     }
 
+    public List<Cart> getAllCart() {
+        try {
+            return cartRepository.findAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new BadRequestException(e.getMessage());
+        }
+    }
+
     public boolean delete(int id) {
         try {
             Optional<Cart> cart = cartRepository.findById(id);

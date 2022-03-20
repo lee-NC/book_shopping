@@ -24,6 +24,11 @@ public class ProductController {
         this.service = service;
     }
 
+    @GetMapping("/")
+    public ResponseEntity<Object> getAllProduct() {
+        return ResponseEntity.ok(service.getAllProduct());
+    }
+
     @GetMapping("/price")
     public ResponseEntity<Object> getProductByPrice(@RequestParam(value = "greater", required = false, defaultValue = "100000000") String greater,
                                                     @RequestParam(value = "less", required = false, defaultValue = "0") String less) {
@@ -65,8 +70,8 @@ public class ProductController {
         return ResponseEntity.ok(service.add(request));
     }
 
-    @GetMapping("")
-    public ResponseEntity<Object> getAllProduct() {
+    @GetMapping("/all")
+    public ResponseEntity<Object> getAll() {
         return ResponseEntity.ok(service.getAll());
     }
 

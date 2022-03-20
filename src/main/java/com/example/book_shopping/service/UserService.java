@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -94,6 +95,31 @@ public class UserService {
             }
             throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
 
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new BadRequestException(e.getMessage());
+        }
+    }
+
+    public boolean changeActive(int userId) {
+        try {
+            User user = userRepository.findByIdAndIsAdmin(userId, false);
+            if (user != null) {
+                user.setActive(!user.isActive());
+                userRepository.save(user);
+                return true;
+            }
+            throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new BadRequestException(e.getMessage());
+        }
+    }
+
+    public List<User> getAllUser() {
+        try {
+            return userRepository.findAll();
         } catch (Exception e) {
             e.printStackTrace();
             throw new BadRequestException(e.getMessage());
