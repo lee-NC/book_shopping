@@ -1,5 +1,7 @@
 package com.example.book_shopping.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
 /**
@@ -14,18 +16,21 @@ public class Product extends BaseEntity {
     private String description;
     @Column(name = "publishing_year")
     private int publishingYear;
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "languageId", referencedColumnName = "id", nullable = false)
-    private Language language;
     @Column(nullable = false)
     private double price;
     @Column(name = "amount", nullable = false)
     private int amount;
     @Column(nullable = false, columnDefinition = "boolean default true")
     private boolean isActive;
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "languageId", referencedColumnName = "id", nullable = false)
+    private Language language;
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "procedureId", referencedColumnName = "id", nullable = false)
     private Procedure procedure;
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "categoryId", referencedColumnName = "id", nullable = false)
     private Category category;

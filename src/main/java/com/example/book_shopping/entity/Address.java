@@ -1,5 +1,7 @@
 package com.example.book_shopping.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
 /**
@@ -14,6 +16,7 @@ public class Address extends BaseEntity {
     private String description;
     @Column(nullable = false, columnDefinition = "boolean default false")
     private boolean isMain;
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "userId", referencedColumnName = "id", nullable = false)
     private User user;
