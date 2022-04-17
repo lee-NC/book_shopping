@@ -1,6 +1,6 @@
 package com.example.book_shopping.repository;
 
-import com.example.book_shopping.entity.Procedure;
+import com.example.book_shopping.entity.Publisher;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
  * created on 3/18/2022
  */
 @Repository
-public interface ProcedureRepository extends JpaRepository<Procedure, Integer> {
+public interface PublisherRepository extends JpaRepository<Publisher, Integer> {
     boolean existsByName(String name);
 }

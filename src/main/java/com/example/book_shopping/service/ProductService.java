@@ -2,13 +2,13 @@ package com.example.book_shopping.service;
 
 import com.example.book_shopping.entity.Category;
 import com.example.book_shopping.entity.Language;
-import com.example.book_shopping.entity.Procedure;
+import com.example.book_shopping.entity.Publisher;
 import com.example.book_shopping.entity.Product;
 import com.example.book_shopping.exception.BadRequestException;
 import com.example.book_shopping.exception.NotFoundException;
 import com.example.book_shopping.repository.CategoryRepository;
 import com.example.book_shopping.repository.LanguageRepository;
-import com.example.book_shopping.repository.ProcedureRepository;
+import com.example.book_shopping.repository.PublisherRepository;
 import com.example.book_shopping.repository.ProductRepository;
 import com.example.book_shopping.request.CreateProductRequest;
 import com.example.book_shopping.request.UpdateProductRequest;
@@ -30,7 +30,7 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
     @Autowired
-    private ProcedureRepository procedureRepository;
+    private PublisherRepository publisherRepository;
     @Autowired
     private CategoryRepository categoryRepository;
     @Autowired
@@ -53,11 +53,11 @@ public class ProductService {
         }
     }
 
-    public List<ProductResponse> getAllByProcedureId(int procedureId) {
+    public List<ProductResponse> getAllByPublisherId(int publisherId) {
         try {
-            Optional<Procedure> procedure = procedureRepository.findById(procedureId);
+            Optional<Publisher> procedure = publisherRepository.findById(publisherId);
             if (procedure.isPresent()) {
-                List<Product> products = productRepository.findAllByProcedure(procedure.get());
+                List<Product> products = productRepository.findAllByPublisher(procedure.get());
                 if (products != null) return toProductResponses(products);
             }
             throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
@@ -111,10 +111,7 @@ public class ProductService {
     public List<ProductResponse> getAll() {
         try {
             List<Product> products = productRepository.findAll();
-            if (products != null) {
-                return toProductResponses(products);
-            }
-            throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
+            return toProductResponses(products);
         } catch (Exception e) {
             e.printStackTrace();
             throw new BadRequestException(e.getMessage());
@@ -147,7 +144,7 @@ public class ProductService {
     public ProductResponse add(CreateProductRequest request) {
         try {
             Optional<Category> category = categoryRepository.findById(request.getCategoryId());
-            Optional<Procedure> procedure = procedureRepository.findById(request.getProcedureId());
+            Optional<Publisher> procedure = publisherRepository.findById(request.getPublisherId());
             Optional<Language> language = languageRepository.findById(request.getLanguageId());
             if (procedure.isPresent() && category.isPresent() && language.isPresent()) {
                 Product product = new Product();
@@ -155,7 +152,7 @@ public class ProductService {
                 product.setCategory(category.get());
                 product.setPrice(request.getPrice());
                 product.setName(request.getName().trim());
-                product.setProcedure(procedure.get());
+                product.setPublisher(procedure.get());
                 product.setPublishingYear(request.getPublishingYear());
                 product.setDescription(request.getDescription().trim());
                 product.setLanguage(language.get());
@@ -181,10 +178,10 @@ public class ProductService {
                         data.setCategory(category.get());
                     }
                 }
-                if (request.getProcedureId() != 0) {
-                    Optional<Procedure> procedure = procedureRepository.findById(request.getProcedureId());
-                    if (procedure.isPresent() && !data.getProcedure().equals(procedure.get())) {
-                        data.setProcedure(procedure.get());
+                if (request.getPublisherId() != 0) {
+                    Optional<Publisher> procedure = publisherRepository.findById(request.getPublisherId());
+                    if (procedure.isPresent() && !data.getPublisher().equals(procedure.get())) {
+                        data.setPublisher(procedure.get());
                     }
                 }
                 if (request.getLanguageId() != 0) {
@@ -271,7 +268,7 @@ public class ProductService {
         response.setLanguage(product.getLanguage());
         response.setPublishingYear(product.getPublishingYear());
         response.setCategory(product.getCategory());
-        response.setProcedure(product.getProcedure());
+        response.setPublisher(product.getPublisher());
         return response;
     }
 

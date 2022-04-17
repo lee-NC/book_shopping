@@ -10,8 +10,8 @@ public class ProductCartResponse {
     private String price;
     private int amountAvailable;
     private boolean isActive;
-    private String procedureName;
-    private int procedureId;
+    private String publisherName;
+    private int publisherId;
 
     public ProductCartResponse() {
     }
@@ -56,19 +56,19 @@ public class ProductCartResponse {
         isActive = active;
     }
 
-    public String getProcedureName() {
-        return procedureName;
+    public String getPublisherName() {
+        return publisherName;
     }
 
-    public void setProcedureName(String procedureName) {
-        this.procedureName = procedureName;
+    public void setPublisherName(String publisherName) {
+        this.publisherName = publisherName;
     }
 
-    public int getProcedureId() {
-        return procedureId;
+    public int getPublisherId() {
+        return publisherId;
     }
 
-    public void setProcedureId(int procedureId) {
-        this.procedureId = procedureId;
+    public void setPublisherId(int publisherId) {
+        this.publisherId = publisherId;
     }
 }

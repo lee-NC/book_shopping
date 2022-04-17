@@ -2,8 +2,7 @@ package com.example.book_shopping.response;
 
 import com.example.book_shopping.entity.Category;
 import com.example.book_shopping.entity.Language;
-import com.example.book_shopping.entity.Procedure;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.example.book_shopping.entity.Publisher;
 
 /**
  * @author lengo
@@ -18,7 +17,7 @@ public class ProductResponse {
     private String price;
     private int amount;
     private boolean isActive;
-    private Procedure procedure;
+    private Publisher publisher;
     private Category category;
 
     public ProductResponse() {
@@ -88,12 +87,12 @@ public class ProductResponse {
         isActive = active;
     }
 
-    public Procedure getProcedure() {
-        return procedure;
+    public Publisher getPublisher() {
+        return publisher;
     }
 
-    public void setProcedure(Procedure procedure) {
-        this.procedure = procedure;
+    public void setPublisher(Publisher publisher) {
+        this.publisher = publisher;
     }
 
     public Category getCategory() {

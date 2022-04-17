@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.*;
@@ -176,7 +175,7 @@ public class OrderService {
         response.setActive(product.isActive());
         response.setPrice(decimalFormat.format(product.getPrice()) + " đ");//revert to VND
         response.setName(product.getName());
-        response.setProcedureName(product.getProcedure().getName());
+        response.setPublisherName(product.getPublisher().getName());
         response.setAmount(orderProduct.getAmount());
         return response;
     }

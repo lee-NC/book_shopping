@@ -42,9 +42,9 @@ public class ProductController {
         return ResponseEntity.ok(service.getAllByCategoryId(categoryId));
     }
 
-    @GetMapping("/procedure/{procedureId}")
-    public ResponseEntity<Object> getProductByProcedureId(@PathVariable("procedureId") int procedureId) {
-        return ResponseEntity.ok(service.getAllByProcedureId(procedureId));
+    @GetMapping("/publisherId/{publisherIdId}")
+    public ResponseEntity<Object> getProductByPublisherId(@PathVariable("publisherIdId") int publisherIdId) {
+        return ResponseEntity.ok(service.getAllByPublisherId(publisherIdId));
     }
 
     @GetMapping("/language/{languageId}")

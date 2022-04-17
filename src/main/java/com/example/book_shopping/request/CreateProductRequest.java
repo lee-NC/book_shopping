@@ -1,7 +1,6 @@
 package com.example.book_shopping.request;
 
 import javax.validation.constraints.*;
-import java.util.Date;
 
 /**
  * @author lengo
@@ -29,7 +28,7 @@ public class CreateProductRequest {
     private int amount;
     @Positive
     @NotNull
-    private int procedureId;
+    private int publisherId;
     @Positive
     @NotNull
     private int categoryId;
@@ -61,8 +60,8 @@ public class CreateProductRequest {
         return amount;
     }
 
-    public int getProcedureId() {
-        return procedureId;
+    public int getPublisherId() {
+        return publisherId;
     }
 
     public int getCategoryId() {

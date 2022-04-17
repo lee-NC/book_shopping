@@ -28,8 +28,8 @@ public class Product extends BaseEntity {
     private Language language;
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "procedureId", referencedColumnName = "id", nullable = false)
-    private Procedure procedure;
+    @JoinColumn(name = "publisherId", referencedColumnName = "id", nullable = false)
+    private Publisher publisher;
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "categoryId", referencedColumnName = "id", nullable = false)
@@ -94,12 +94,12 @@ public class Product extends BaseEntity {
         isActive = active;
     }
 
-    public Procedure getProcedure() {
-        return procedure;
+    public Publisher getPublisher() {
+        return publisher;
     }
 
-    public void setProcedure(Procedure procedure) {
-        this.procedure = procedure;
+    public void setPublisher(Publisher publisher) {
+        this.publisher = publisher;
     }
 
     public Category getCategory() {
