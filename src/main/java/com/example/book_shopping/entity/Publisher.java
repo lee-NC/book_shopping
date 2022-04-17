@@ -6,8 +6,8 @@ import javax.persistence.*;
  * @author lengo
  * created on 3/18/2022
  */
-@Entity(name = "procedures")
-public class Procedure {
+@Entity(name = "publishers")
+public class Publisher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -16,7 +16,7 @@ public class Procedure {
     @Column(nullable = false)
     private String country;
 
-    public Procedure() {
+    public Publisher() {
     }
 
     public int getId() {

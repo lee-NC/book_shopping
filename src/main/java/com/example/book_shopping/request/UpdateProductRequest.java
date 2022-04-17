@@ -22,7 +22,7 @@ public class UpdateProductRequest {
     @Positive
     private int amount;
     @Positive
-    private int procedureId;
+    private int publisherId;
     @Positive
     private int categoryId;
 
@@ -53,8 +53,8 @@ public class UpdateProductRequest {
         return amount;
     }
 
-    public int getProcedureId() {
-        return procedureId;
+    public int getPublisherId() {
+        return publisherId;
     }
 
     public int getCategoryId() {

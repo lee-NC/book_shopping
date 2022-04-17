@@ -39,7 +39,7 @@ public class CartService {
         try {
             User user = userRepository.findByIdAndIsActiveAndIsAdmin(userId, true, false);
             if (user != null) {
-                List<Cart> carts = cartRepository.findAllByUserGroupByProcedureOrderByUpdatedAt(user);
+                List<Cart> carts = cartRepository.findAllByUserGroupByPublisherOrderByUpdatedAt(user);
                 if (carts == null) throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
                 List<CartResponse> cartResponses = new ArrayList<>();
                 for (Cart cart : carts) {
@@ -133,9 +133,9 @@ public class CartService {
         response.setPrice(decimalFormat.format(product.getPrice()) + " đ");//revert to VND
         response.setAmountAvailable(product.getAmount());
         response.setName(product.getName());
-        response.setProcedureName(product.getProcedure().getName());
-        response.setProcedureId(product.getProcedure().getId());
-        response.setProcedureId(product.getProcedure().getId());
+        response.setPublisherName(product.getPublisher().getName());
+        response.setPublisherId(product.getPublisher().getId());
+        response.setPublisherId(product.getPublisher().getId());
         return response;
     }
 

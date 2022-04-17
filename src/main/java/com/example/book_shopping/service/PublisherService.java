@@ -1,12 +1,12 @@
 package com.example.book_shopping.service;
 
-import com.example.book_shopping.entity.Procedure;
+import com.example.book_shopping.entity.Publisher;
 import com.example.book_shopping.exception.BadRequestException;
 import com.example.book_shopping.exception.DuplicateRecordException;
 import com.example.book_shopping.exception.NotFoundException;
-import com.example.book_shopping.repository.ProcedureRepository;
-import com.example.book_shopping.request.CreateProcedureRequest;
-import com.example.book_shopping.request.UpdateProcedureRequest;
+import com.example.book_shopping.repository.PublisherRepository;
+import com.example.book_shopping.request.CreatePublisherRequest;
+import com.example.book_shopping.request.UpdatePublisherRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -20,25 +20,25 @@ import java.util.Optional;
  */
 @Service
 @Transactional
-public class ProcedureService {
-    private final ProcedureRepository procedureRepository;
+public class PublisherService {
+    private final PublisherRepository publisherRepository;
 
-    public ProcedureService(ProcedureRepository procedureRepository) {
-        this.procedureRepository = procedureRepository;
+    public PublisherService(PublisherRepository publisherRepository) {
+        this.publisherRepository = publisherRepository;
     }
 
-    public List<Procedure> getAll() {
+    public List<Publisher> getAll() {
         try {
-            return procedureRepository.findAll();
+            return publisherRepository.findAll();
         } catch (Exception e) {
             e.printStackTrace();
             throw new BadRequestException(e.getMessage());
         }
     }
 
-    public Procedure get(int id) {
+    public Publisher get(int id) {
         try {
-            Optional<Procedure> procedure = procedureRepository.findById(id);
+            Optional<Publisher> procedure = publisherRepository.findById(id);
             if (procedure.isPresent()) return procedure.get();
             throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
         } catch (Exception e) {
@@ -47,28 +47,28 @@ public class ProcedureService {
         }
     }
 
-    public Procedure add(CreateProcedureRequest request) {
+    public Publisher add(CreatePublisherRequest request) {
         try {
-            if (procedureRepository.existsByName(request.getName().trim())) {
+            if (publisherRepository.existsByName(request.getName().trim())) {
                 throw new DuplicateRecordException("Name was used");
             }
-            Procedure procedure = new Procedure();
-            procedure.setCountry(request.getCountry().trim());
-            procedure.setName(request.getName().trim());
-            procedure = procedureRepository.save(procedure);
-            return procedure;
+            Publisher publisher = new Publisher();
+            publisher.setCountry(request.getCountry().trim());
+            publisher.setName(request.getName().trim());
+            publisher = publisherRepository.save(publisher);
+            return publisher;
         } catch (Exception e) {
             e.printStackTrace();
             throw new BadRequestException(e.getMessage());
         }
     }
 
-    public Procedure update(int id, UpdateProcedureRequest request) {
+    public Publisher update(int id, UpdatePublisherRequest request) {
         try {
-            Optional<Procedure> procedure = procedureRepository.findById(id);
+            Optional<Publisher> procedure = publisherRepository.findById(id);
             if (procedure.isPresent()) {
                 if (request.getCountry() != null && !procedure.get().getCountry().equals(request.getCountry().trim())) {
-                    if (procedureRepository.existsByName(request.getName().trim()))
+                    if (publisherRepository.existsByName(request.getName().trim()))
                         throw new DuplicateRecordException("Name was used");
                     procedure.get().setCountry(request.getCountry().trim());
 
@@ -77,7 +77,7 @@ public class ProcedureService {
                     procedure.get().setCountry(request.getCountry().trim());
 
                 }
-                return procedureRepository.save(procedure.get());
+                return publisherRepository.save(procedure.get());
             }
             throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
         } catch (Exception e) {
@@ -88,9 +88,9 @@ public class ProcedureService {
 
     public boolean delete(int id) {
         try {
-            Optional<Procedure> procedure = procedureRepository.findById(id);
+            Optional<Publisher> procedure = publisherRepository.findById(id);
             if (procedure.isPresent()) {
-                procedureRepository.delete(procedure.get());
+                publisherRepository.delete(procedure.get());
                 return true;
             }
             throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());

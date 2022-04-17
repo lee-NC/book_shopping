@@ -2,7 +2,7 @@ package com.example.book_shopping.repository;
 
 import com.example.book_shopping.entity.Category;
 import com.example.book_shopping.entity.Language;
-import com.example.book_shopping.entity.Procedure;
+import com.example.book_shopping.entity.Publisher;
 import com.example.book_shopping.entity.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -20,7 +20,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     List<Product> findAllByCategory(Category category);
 
-    List<Product> findAllByProcedure(Procedure procedure);
+    List<Product> findAllByPublisher(Publisher publisher);
 
     List<Product> findAllByLanguage(Language language);
 
