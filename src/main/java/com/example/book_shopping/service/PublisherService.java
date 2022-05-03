@@ -74,7 +74,7 @@ public class PublisherService {
 
                 }
                 if (request.getName() != null && !procedure.get().getName().equals(request.getName().trim())) {
-                    procedure.get().setCountry(request.getCountry().trim());
+                    procedure.get().setName(request.getCountry().trim());
 
                 }
                 return publisherRepository.save(procedure.get());
