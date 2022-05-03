@@ -28,11 +28,11 @@ public class Product extends BaseEntity {
     @JoinColumn(name = "languageId", referencedColumnName = "id", nullable = false)
     private Language language;
     @JsonIgnoreProperties(value = {"hibernateLazyInitializer"})
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne()
     @JoinColumn(name = "publisherId", referencedColumnName = "id", nullable = false)
     private Publisher publisher;
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne()
     @JoinColumn(name = "categoryId", referencedColumnName = "id", nullable = false)
     private Category category;
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})

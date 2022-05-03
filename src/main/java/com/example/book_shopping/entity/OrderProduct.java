@@ -14,11 +14,11 @@ public class OrderProduct {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "order_id", referencedColumnName = "id", nullable = false)
     private Order order;
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
     private Product product;
     @Column(nullable = false)

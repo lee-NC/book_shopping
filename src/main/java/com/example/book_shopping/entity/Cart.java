@@ -11,11 +11,11 @@ import javax.persistence.*;
 @Entity(name = "carts")
 public class Cart extends BaseEntity {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne()
     @JoinColumn(name = "userId", referencedColumnName = "id", nullable = false)
     private User user;
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "productId", referencedColumnName = "id", nullable = false)
     private Product product;
     @Column(nullable = false)

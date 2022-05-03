@@ -17,7 +17,7 @@ public class Address extends BaseEntity {
     @Column(nullable = false, columnDefinition = "boolean default false")
     private boolean isMain;
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "userId", referencedColumnName = "id", nullable = false)
     private User user;
 

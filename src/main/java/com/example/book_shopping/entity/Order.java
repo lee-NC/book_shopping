@@ -15,7 +15,7 @@ public class Order extends BaseEntity {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "order")
     private Set<OrderProduct> orderProducts;
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne()
     @JoinColumn(name = "address_id", referencedColumnName = "id", nullable = false)
     private Address address;
     @Column(nullable = false)
