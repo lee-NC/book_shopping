@@ -6,7 +6,8 @@ import com.example.book_shopping.exception.BadRequestException;
 import com.example.book_shopping.exception.NotFoundException;
 import com.example.book_shopping.repository.AddressRepository;
 import com.example.book_shopping.repository.UserRepository;
-import com.example.book_shopping.request.AddressRequest;
+import com.example.book_shopping.request.CreateAddressRequest;
+import com.example.book_shopping.request.UpdateAddressRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -40,7 +41,7 @@ public class AddressService {
         }
     }
 
-    public Address update(int id, AddressRequest request) {
+    public Address update(int id, UpdateAddressRequest request) {
         try {
             Optional<Address> address = addressRepository.findById(id);
             if (address.isPresent()) {
@@ -60,7 +61,7 @@ public class AddressService {
         }
     }
 
-    public Address add(int userId, AddressRequest request) {
+    public Address add(int userId, CreateAddressRequest request) {
         try {
             User user = userRepository.findByIdAndIsActiveAndIsAdmin(userId, true, false);
             if (user != null) {

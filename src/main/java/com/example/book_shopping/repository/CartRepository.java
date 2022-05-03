@@ -17,8 +17,7 @@ import java.util.List;
 public interface CartRepository extends JpaRepository<Cart, Integer> {
     @Query(value = "SELECT c FROM carts c " +
             "WHERE c.user = ?1 " +
-            "GROUP BY c.product.publisher " +
-            "ORDER BY c.updatedAt",
+            "ORDER BY c.updatedAt DESC ",
             countQuery = "SELECT count(c) FROM carts c")
     List<Cart> findAllByUserGroupByPublisherOrderByUpdatedAt(User user);
 

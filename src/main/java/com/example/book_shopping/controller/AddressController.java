@@ -1,6 +1,7 @@
 package com.example.book_shopping.controller;
 
-import com.example.book_shopping.request.AddressRequest;
+import com.example.book_shopping.request.CreateAddressRequest;
+import com.example.book_shopping.request.UpdateAddressRequest;
 import com.example.book_shopping.service.AddressService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,12 +28,12 @@ public class AddressController {
 
 
     @PutMapping("/{addressId}")
-    public ResponseEntity<Object> updateAddress(@PathVariable("addressId") int addressId, @Valid @RequestBody AddressRequest request) {
+    public ResponseEntity<Object> updateAddress(@PathVariable("addressId") int addressId, @Valid @RequestBody UpdateAddressRequest request) {
         return ResponseEntity.ok(service.update(addressId, request));
     }
 
     @PostMapping("/{userId}")
-    public ResponseEntity<Object> addAddress(@PathVariable("userId") int userId, @Valid @RequestBody AddressRequest request) {
+    public ResponseEntity<Object> addAddress(@PathVariable("userId") int userId, @Valid @RequestBody CreateAddressRequest request) {
         return ResponseEntity.ok(service.add(userId, request));
     }
 

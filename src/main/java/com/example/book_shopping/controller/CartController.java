@@ -32,7 +32,7 @@ public class CartController {
     }
 
     @GetMapping("")
-    public ResponseEntity<Object> getAllUser() {
+    public ResponseEntity<Object> getAll() {
         return ResponseEntity.ok(service.getAllCart());
     }
 
