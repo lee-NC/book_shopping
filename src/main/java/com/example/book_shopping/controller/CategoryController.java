@@ -1,7 +1,7 @@
 package com.example.book_shopping.controller;
 
 import com.example.book_shopping.request.CreateCategoryRequest;
-import com.example.book_shopping.request.StringRequest;
+import com.example.book_shopping.request.UpdateCategoryRequest;
 import com.example.book_shopping.service.CategoryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +32,7 @@ public class CategoryController {
     }
 
     @PutMapping("/{categoryId}")
-    public ResponseEntity<Object> updateCategory(@PathVariable("categoryId") int categoryId, @Valid @RequestBody StringRequest request) {
+    public ResponseEntity<Object> updateCategory(@PathVariable("categoryId") int categoryId, @Valid @RequestBody UpdateCategoryRequest request) {
         return ResponseEntity.ok(service.update(categoryId, request));
     }
 

@@ -27,7 +27,7 @@ public class Product extends BaseEntity {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "languageId", referencedColumnName = "id", nullable = false)
     private Language language;
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @JsonIgnoreProperties(value = {"hibernateLazyInitializer"})
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "publisherId", referencedColumnName = "id", nullable = false)
     private Publisher publisher;

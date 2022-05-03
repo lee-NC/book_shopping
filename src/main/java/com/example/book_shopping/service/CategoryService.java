@@ -6,7 +6,7 @@ import com.example.book_shopping.exception.DuplicateRecordException;
 import com.example.book_shopping.exception.NotFoundException;
 import com.example.book_shopping.repository.CategoryRepository;
 import com.example.book_shopping.request.CreateCategoryRequest;
-import com.example.book_shopping.request.StringRequest;
+import com.example.book_shopping.request.UpdateCategoryRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -63,11 +63,16 @@ public class CategoryService {
         }
     }
 
-    public Category update(int id, StringRequest request) {
+    public Category update(int id, UpdateCategoryRequest request) {
         try {
             Optional<Category> category = categoryRepository.findById(id);
-            if (category.isPresent() && request.getText() != null && !category.get().getDescription().equals(request.getText().trim())) {
-                category.get().setDescription(request.getText().trim());
+            if (category.isPresent()) {
+                if (request.getDescription() != null && !category.get().getDescription().equals(request.getDescription().trim())) {
+                    category.get().setDescription(request.getDescription().trim());
+                }
+                if (request.getName() != null && !category.get().getName().equals(request.getName().trim())) {
+                    category.get().setName(request.getName().trim());
+                }
                 return categoryRepository.save(category.get());
             }
             throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());

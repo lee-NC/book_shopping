@@ -35,11 +35,11 @@ public class LanguageService {
 
     public Language add(StringRequest request) {
         try {
-            if (languageRepository.existsByName(request.getText().trim())) {
+            if (languageRepository.existsByName(request.getName().trim())) {
                 throw new DuplicateRecordException("Name was used");
             }
             Language language = new Language();
-            language.setName(request.getText().trim());
+            language.setName(request.getName().trim());
             language = languageRepository.save(language);
             return language;
         } catch (Exception e) {
@@ -51,10 +51,10 @@ public class LanguageService {
     public Language update(int id, StringRequest request) {
         try {
             Optional<Language> language = languageRepository.findById(id);
-            if (language.isPresent() && request.getText() != null && !language.get().getName().equals(request.getText().trim())) {
-                if (languageRepository.existsByName(request.getText().trim()))
+            if (language.isPresent() && request.getName() != null && !language.get().getName().equals(request.getName().trim())) {
+                if (languageRepository.existsByName(request.getName().trim()))
                     throw new DuplicateRecordException("Name was used");
-                language.get().setName(request.getText().trim());
+                language.get().setName(request.getName().trim());
                 return languageRepository.save(language.get());
             }
             throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
