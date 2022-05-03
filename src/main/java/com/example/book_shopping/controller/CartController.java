@@ -41,7 +41,7 @@ public class CartController {
         return service.add(userId, request) ? ResponseEntity.ok(HttpStatus.OK.getReasonPhrase()) : ResponseEntity.badRequest().body(HttpStatus.BAD_REQUEST.getReasonPhrase());
     }
 
-    @PostMapping("/{cartId}")
+    @PutMapping("/{cartId}")
     public ResponseEntity<Object> updateCart(@PathVariable("cartId") int cartId, @Valid @RequestBody UpdateCartRequest request) {
         return ResponseEntity.ok(service.update(cartId, request));
     }

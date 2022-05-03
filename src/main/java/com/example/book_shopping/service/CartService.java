@@ -58,6 +58,7 @@ public class CartService {
         try {
             User user = userRepository.findByIdAndIsActiveAndIsAdmin(userId, true, false);
             Product product = productRepository.findByIdAndIsActive(request.getProductId(), true);
+            System.out.println("Done");
             if (user != null && request.getAmount() <= product.getAmount()){
                 Cart data = cartRepository.findByUserAndProduct(user, product);
                 if (data!=null){

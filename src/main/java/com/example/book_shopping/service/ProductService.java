@@ -144,17 +144,18 @@ public class ProductService {
     public ProductResponse add(CreateProductRequest request) {
         try {
             Optional<Category> category = categoryRepository.findById(request.getCategoryId());
-            Optional<Publisher> procedure = publisherRepository.findById(request.getPublisherId());
+            Optional<Publisher> publisher = publisherRepository.findById(request.getPublisherId());
             Optional<Language> language = languageRepository.findById(request.getLanguageId());
-            if (procedure.isPresent() && category.isPresent() && language.isPresent()) {
+            if (publisher.isPresent() && category.isPresent() && language.isPresent()) {
                 Product product = new Product();
                 product.setAmount(request.getAmount());
                 product.setCategory(category.get());
                 product.setPrice(request.getPrice());
                 product.setName(request.getName().trim());
-                product.setPublisher(procedure.get());
+                product.setPublisher(publisher.get());
                 product.setPublishingYear(request.getPublishingYear());
                 product.setDescription(request.getDescription().trim());
+                product.setActive(true);
                 product.setLanguage(language.get());
                 product = productRepository.save(product);
                 return toProductResponse(product);
