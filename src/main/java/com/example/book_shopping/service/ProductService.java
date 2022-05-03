@@ -1,25 +1,30 @@
 package com.example.book_shopping.service;
 
-import com.example.book_shopping.entity.Category;
-import com.example.book_shopping.entity.Language;
-import com.example.book_shopping.entity.Publisher;
-import com.example.book_shopping.entity.Product;
+import com.example.book_shopping.entity.*;
 import com.example.book_shopping.exception.BadRequestException;
 import com.example.book_shopping.exception.NotFoundException;
-import com.example.book_shopping.repository.CategoryRepository;
-import com.example.book_shopping.repository.LanguageRepository;
-import com.example.book_shopping.repository.PublisherRepository;
-import com.example.book_shopping.repository.ProductRepository;
+import com.example.book_shopping.repository.*;
 import com.example.book_shopping.request.CreateProductRequest;
 import com.example.book_shopping.request.UpdateProductRequest;
 import com.example.book_shopping.response.ProductResponse;
+import com.example.book_shopping.response.UploadImageResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.servlet.http.HttpServletRequest;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.*;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * @author lengo
@@ -27,6 +32,7 @@ import java.util.*;
  */
 @Service
 public class ProductService {
+    private static final String UPLOAD_DIR = "../book_shopping/src/main/resources/templates/image/";
     @Autowired
     private ProductRepository productRepository;
     @Autowired
@@ -35,6 +41,12 @@ public class ProductService {
     private CategoryRepository categoryRepository;
     @Autowired
     private LanguageRepository languageRepository;
+    @Autowired
+    private OrderProductRepository orderProductRepository;
+    @Autowired
+    private ProductImageRepository productImageRepository;
+    @Autowired
+    private FileStorageService fileStorageService;
 
     public List<ProductResponse> getAllByCategoryId(int categoryId) {
         try {
@@ -108,19 +120,28 @@ public class ProductService {
         }
     }
 
-    public List<ProductResponse> getAll() {
+    public List<ProductResponse> getBestSale() {
         try {
-            List<Product> products = productRepository.findAll();
-            return toProductResponses(products);
+            List<Product> products = orderProductRepository.findProductBestSales();
+            if(products!=null){
+                int size = products.size();
+                if (size-1<=4 && size>0){
+                    products = products.subList(0, size-1);
+                }
+                else products = products.subList(0, 4);
+                return toProductResponses(products);
+            }
+            throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
         } catch (Exception e) {
             e.printStackTrace();
             throw new BadRequestException(e.getMessage());
         }
     }
 
-    public List<Product> getAllProduct() {
+    public List<ProductResponse> getAll() {
         try {
-            return productRepository.findAll();
+            List<Product> products = productRepository.findAll();
+            return toProductResponses(products);
         } catch (Exception e) {
             e.printStackTrace();
             throw new BadRequestException(e.getMessage());
@@ -167,6 +188,89 @@ public class ProductService {
         }
     }
 
+    public ProductResponse addImage(int id, String name) {
+        try {
+            Optional<Product> product = productRepository.findById(id);
+            if (product.isPresent()) {
+                ProductImage productImage = new ProductImage();
+                name = name.toLowerCase(Locale.ROOT);
+                productImage.setName(name);
+                productImage = productImageRepository.save(productImage);
+                Product data = product.get();
+                Set<ProductImage> productImages = data.getProductImages();
+                productImages.add(productImage);
+                data.setProductImages(productImages);
+                data = productRepository.save(data);
+                return toProductResponse(data);
+            }
+            throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new BadRequestException(e.getMessage());
+        }
+    }
+
+    public List<UploadImageResponse> uploadMultipleImages(MultipartFile[] files, int id) {
+        return Arrays.asList(files)
+                .stream()
+                .map(file -> uploadImage(file, id))
+                .collect(Collectors.toList());
+    }
+
+    private UploadImageResponse uploadImage(MultipartFile file, int id) {
+        try {
+            Optional<Product> product = productRepository.findById(id);
+            if (product.isPresent() && file != null && file.getSize() >= 2000 && file.getSize() <= 5242880) {
+                Product data = product.get();
+                String fileType = Objects.requireNonNull(file.getContentType()).split(Pattern.quote("/"))[0];
+                if (fileType.equals("image")) {
+                    String fileName = fileStorageService.storeFile(file, product.get().getName());
+                    fileStorageService.resizeImage(UPLOAD_DIR + fileName);
+                    String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                            .path("/image/download/")
+                            .path(fileName)
+                            .toUriString();
+                    ProductImage productImage = new ProductImage();
+                    productImage.setName(fileName);
+                    productImage.setProduct(data);
+                    productImage = productImageRepository.save(productImage);
+                    Set<ProductImage> productImages = data.getProductImages();
+                    productImages.add(productImage);
+                    UploadImageResponse uploadImageResponse = new UploadImageResponse(fileName, fileDownloadUri,
+                            file.getContentType(), product.get().getId());
+                    return uploadImageResponse;
+                }
+            }
+            throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new BadRequestException(e.getMessage());
+        }
+    }
+
+    public ResponseEntity<Resource> downloadImage(String fileName, HttpServletRequest request) {
+        // Load file as Resource
+        try {
+            Resource resource = fileStorageService.loadFileAsResource(fileName);
+            // Try to determine file's content type
+            String contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
+
+            // Fallback to the default content type if type could not be determined
+            if (contentType == null) {
+                contentType = "application/octet-stream";
+            }
+
+            return ResponseEntity.ok()
+                    .contentType(MediaType.parseMediaType(contentType))
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                    .body(resource);
+        } catch (Exception e) {
+            throw new BadRequestException(e.getMessage());
+        }
+    }
+
     public ProductResponse update(int id, UpdateProductRequest request) {
         try {
             Optional<Product> product = productRepository.findById(id);
@@ -192,7 +296,7 @@ public class ProductService {
                 }
                 if (request.getAmount() != 0 && request.getAmount() != data.getAmount()) {
                     data.setAmount(request.getAmount());
-                    if (product.get().getAmount()==0)   data.setActive(false);
+                    if (product.get().getAmount() == 0) data.setActive(false);
                 }
                 if (request.getPrice() != 0 && request.getPrice() != data.getPrice()) {
                     data.setPrice(request.getPrice());
@@ -221,7 +325,8 @@ public class ProductService {
             Optional<Product> product = productRepository.findById(id);
             if (product.isPresent()) {
                 product.get().setActive(!product.get().isActive());
-                if (product.get().isActive() && product.get().getAmount()==0)   throw new BadRequestException("Product is sold out");
+                if (product.get().isActive() && product.get().getAmount() == 0)
+                    throw new BadRequestException("Product is sold out");
                 return toProductResponse(productRepository.save(product.get()));
             }
             throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
@@ -237,6 +342,22 @@ public class ProductService {
             Optional<Product> product = productRepository.findById(id);
             if (product.isPresent()) {
                 productRepository.delete(product.get());
+                return true;
+            }
+            throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new BadRequestException(e.getMessage());
+        }
+    }
+
+    public boolean deleteImage(String name) {
+        try {
+            name = name.toLowerCase(Locale.ROOT);
+            ProductImage productImage = productImageRepository.findByName(name);
+            if (productImage != null) {
+                productImageRepository.delete(productImage);
                 return true;
             }
             throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
@@ -269,7 +390,15 @@ public class ProductService {
         response.setPublishingYear(product.getPublishingYear());
         response.setCategory(product.getCategory());
         response.setPublisher(product.getPublisher());
+        Set<ProductImage> productImages = new HashSet<>();
+        if (product.getProductImages() != null) productImages = product.getProductImages();
+        List<String> imageNames = new ArrayList<>();
+        for (ProductImage productImage : productImages) {
+            imageNames.add(productImage.getName());
+        }
+        response.setImageName(imageNames);
         return response;
     }
+
 
 }

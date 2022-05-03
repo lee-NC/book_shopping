@@ -10,7 +10,9 @@ import com.example.book_shopping.repository.ProductRepository;
 import com.example.book_shopping.repository.UserRepository;
 import com.example.book_shopping.request.CreateCartRequest;
 import com.example.book_shopping.request.UpdateCartRequest;
-import com.example.book_shopping.response.*;
+import com.example.book_shopping.response.CartResponse;
+import com.example.book_shopping.response.ListCartResponse;
+import com.example.book_shopping.response.ProductCartResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -58,16 +60,14 @@ public class CartService {
         try {
             User user = userRepository.findByIdAndIsActiveAndIsAdmin(userId, true, false);
             Product product = productRepository.findByIdAndIsActive(request.getProductId(), true);
-            if (user != null && request.getAmount() <= product.getAmount()){
+            if (user != null && request.getAmount() <= product.getAmount()) {
                 Cart data = cartRepository.findByUserAndProduct(user, product);
-                if (data!=null){
-                    if ((data.getAmount() + request.getAmount()) <= product.getAmount()){
+                if (data != null) {
+                    if ((data.getAmount() + request.getAmount()) <= product.getAmount()) {
                         data.setAmount(data.getAmount() + request.getAmount());
                         cartRepository.save(data);
-                    }
-                    else throw new BadRequestException("Products to the limit");
-                }
-                else {
+                    } else throw new BadRequestException("Products to the limit");
+                } else {
                     Cart cart = new Cart();
                     cart.setAmount(request.getAmount());
                     cart.setProduct(product);
@@ -95,7 +95,7 @@ public class CartService {
     public boolean delete(int id) {
         try {
             Optional<Cart> cart = cartRepository.findById(id);
-            if (cart.isPresent()){
+            if (cart.isPresent()) {
                 cartRepository.delete(cart.get());
                 return true;
             }
@@ -109,9 +109,9 @@ public class CartService {
     public CartResponse update(int id, UpdateCartRequest request) {
         try {
             Optional<Cart> cart = cartRepository.findById(id);
-            if (cart.isPresent()){
+            if (cart.isPresent()) {
                 Cart data = cart.get();
-                if (data.getProduct().isActive() && request.getAmount()<= data.getProduct().getAmount() ){
+                if (data.getProduct().isActive() && request.getAmount() <= data.getProduct().getAmount()) {
                     data.setAmount(request.getAmount());
                     data = cartRepository.save(data);
                     return toCartResponse(data);

@@ -1,15 +1,22 @@
 package com.example.book_shopping.controller;
 
+import com.example.book_shopping.entity.Product;
 import com.example.book_shopping.request.CreateProductRequest;
 import com.example.book_shopping.request.UpdateProductRequest;
 import com.example.book_shopping.service.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.Objects;
+import java.util.regex.Pattern;
 
 /**
  * @author lengo
@@ -26,9 +33,14 @@ public class ProductController {
         this.service = service;
     }
 
-    @GetMapping("/")
-    public ResponseEntity<Object> getAllProduct() {
-        return ResponseEntity.ok(service.getAllProduct());
+    @GetMapping("")
+    public ResponseEntity<Object> getAll() {
+        return ResponseEntity.ok(service.getAll());
+    }
+
+    @GetMapping("/best_sale")
+    public ResponseEntity<Object> getBestSale() {
+        return ResponseEntity.ok(service.getBestSale());
     }
 
     @GetMapping("/price")
@@ -67,14 +79,19 @@ public class ProductController {
         return ResponseEntity.ok(service.update(productId, request));
     }
 
+    @PostMapping("/image/upload/{id}")
+    public ResponseEntity<Object> uploadImage(@RequestParam("file") MultipartFile[] files, @PathVariable("id") int id) {
+        return ResponseEntity.ok(service.uploadMultipleImages(files, id));
+    }
+
+    @GetMapping("/image/download/{fileName:.+}")
+    public ResponseEntity<Resource> downloadImage(@PathVariable String fileName, HttpServletRequest request) {
+        return service.downloadImage(fileName, request);
+    }
+
     @PostMapping("")
     public ResponseEntity<Object> addProduct(@Valid @RequestBody CreateProductRequest request) {
         return ResponseEntity.ok(service.add(request));
-    }
-
-    @GetMapping("/all")
-    public ResponseEntity<Object> getAll() {
-        return ResponseEntity.ok(service.getAll());
     }
 
     @PutMapping("/status/{productId}")
@@ -85,5 +102,10 @@ public class ProductController {
     @DeleteMapping("/{productId}")
     public ResponseEntity<Object> deleteProduct(@PathVariable("productId") int productId) {
         return service.delete(productId) ? ResponseEntity.ok(HttpStatus.OK.getReasonPhrase()) : ResponseEntity.badRequest().body(HttpStatus.BAD_REQUEST.getReasonPhrase());
+    }
+
+    @DeleteMapping("/image")
+    public ResponseEntity<Object> deleteProductImage(@RequestParam(value = "name") String name) {
+        return service.deleteImage(name) ? ResponseEntity.ok(HttpStatus.OK.getReasonPhrase()) : ResponseEntity.badRequest().body(HttpStatus.BAD_REQUEST.getReasonPhrase());
     }
 }

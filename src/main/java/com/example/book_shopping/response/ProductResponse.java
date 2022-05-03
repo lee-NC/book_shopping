@@ -4,6 +4,8 @@ import com.example.book_shopping.entity.Category;
 import com.example.book_shopping.entity.Language;
 import com.example.book_shopping.entity.Publisher;
 
+import java.util.List;
+
 /**
  * @author lengo
  * created on 3/18/2022
@@ -19,6 +21,7 @@ public class ProductResponse {
     private boolean isActive;
     private Publisher publisher;
     private Category category;
+    private List<String> imageName;
 
     public ProductResponse() {
     }
@@ -101,5 +104,13 @@ public class ProductResponse {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public List<String> getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(List<String> imageName) {
+        this.imageName = imageName;
     }
 }

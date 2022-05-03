@@ -37,4 +37,5 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
             " LIKE %?1%",
             countQuery = "SELECT count(p) FROM products p")
     List<Product> searchProductRelative(String keyword);
+
 }

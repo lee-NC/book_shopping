@@ -22,8 +22,12 @@ import java.util.*;
  */
 @Service
 public class OrderService {
+    Locale locale = new Locale("vi", "VN");
+    DecimalFormat decimalFormat = (DecimalFormat) NumberFormat.getNumberInstance(locale);
     @Autowired
     private OrderRepository orderRepository;
+    @Autowired
+    private OrderProductRepository orderProductRepository;
     @Autowired
     private AddressRepository addressRepository;
     @Autowired
@@ -33,9 +37,6 @@ public class OrderService {
     @Autowired
     private ProductRepository productRepository;
 
-    Locale locale = new Locale("vi", "VN");
-    DecimalFormat decimalFormat = (DecimalFormat) NumberFormat.getNumberInstance(locale);
-
     public OrderResponse add(int userId, CreateOrderRequest request) {
         try {
             User user = userRepository.findByIdAndIsActiveAndIsAdmin(userId, true, false);
@@ -43,12 +44,19 @@ public class OrderService {
             if (user != null && address.isPresent() && address.get().getUser().equals(user)) {
                 Set<OrderProduct> orderProducts = new HashSet<>();
                 double value = 0;
+                Order order = new Order();
+                order.setAddress(address.get());
+                order.setStatus(DefineString.SUBMITTING);
+                order.setValue(value);
+                order = orderRepository.save(order);
                 for (int id : request.getCartIds()) {
                     Optional<Cart> cart = cartRepository.findById(id);
-                    if (cart.isPresent() && cart.get().getAmount()<=cart.get().getProduct().getAmount()) {
+                    if (cart.isPresent() && cart.get().getAmount() <= cart.get().getProduct().getAmount()) {
                         OrderProduct orderProduct = new OrderProduct();
                         orderProduct.setAmount(cart.get().getAmount());
                         orderProduct.setProduct(cart.get().getProduct());
+                        orderProduct.setOrder(order);
+                        orderProduct = orderProductRepository.save(orderProduct);
                         orderProducts.add(orderProduct);
                         value += cart.get().getProduct().getPrice() * cart.get().getAmount();
                         Product product = cart.get().getProduct();
@@ -56,11 +64,7 @@ public class OrderService {
                         productRepository.save(product);
                     }
                 }
-                Order order = new Order();
                 order.setOrderProducts(orderProducts);
-                order.setAddress(address.get());
-                order.setStatus(DefineString.SUBMITTING);
-                order.setValue(value);
                 order = orderRepository.save(order);
                 return toOrderResponse(order);
             }
@@ -102,7 +106,7 @@ public class OrderService {
             if (order != null) {
                 order.setStatus(DefineString.CANCELLED);
                 orderRepository.save(order);
-                for (OrderProduct orderProduct : order.getOrderProducts()){
+                for (OrderProduct orderProduct : order.getOrderProducts()) {
                     Product product = orderProduct.getProduct();
                     product.setAmount(product.getAmount() + orderProduct.getAmount());
                     productRepository.save(product);
@@ -134,12 +138,12 @@ public class OrderService {
         }
     }
 
-    public void acceptOrder(){
+    public void acceptOrder() {
         try {
             List<Order> orders = orderRepository.findAllByStatus(DefineString.SUBMITTING);
             if (!orders.isEmpty()) {
-                for (Order order: orders){
-                    if(order.getUpdatedAt().getTime()<=(new Date().getTime()+ 600000)){
+                for (Order order : orders) {
+                    if (order.getUpdatedAt().getTime() <= (new Date().getTime() + 600000)) {
                         order.setStatus(DefineString.DELIVERING);
                         orderRepository.save(order);
                     }
@@ -151,12 +155,12 @@ public class OrderService {
         }
     }
 
-    public void delivered(){
+    public void delivered() {
         try {
             List<Order> orders = orderRepository.findAllByStatus(DefineString.DELIVERING);
             if (!orders.isEmpty()) {
-                for (Order order: orders){
-                    if(order.getUpdatedAt().after(new Date()) && order.getUpdatedAt().compareTo(new Date())==2){
+                for (Order order : orders) {
+                    if (order.getUpdatedAt().after(new Date()) && order.getUpdatedAt().compareTo(new Date()) == 2) {
                         order.setStatus(DefineString.DELIVERED);
                         orderRepository.save(order);
                     }
