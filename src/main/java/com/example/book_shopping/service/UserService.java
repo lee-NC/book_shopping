@@ -34,6 +34,7 @@ public class UserService {
         try {
             User user = userRepository.findByEmailAndPasswordAndIsActive(request.getEmail(), request.getPassword(), true);
             if (user != null) {
+                System.out.println("DONE");
                 String fullName = user.getLastName() + " " + user.getFirstName();
                 return new UserResponse(user.getId(), fullName, user.isActive(), user.isAdmin());
             }
@@ -67,6 +68,7 @@ public class UserService {
                 user.setPassword(request.getPassword().trim());
                 user.setLastName(request.getLastName().trim());
                 user.setPhoneNumber(request.getPhoneNumber().trim());
+                user.setActive(true);
                 user = userRepository.save(user);
 
                 Address address = new Address();
