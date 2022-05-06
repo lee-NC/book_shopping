@@ -130,7 +130,7 @@ public class CartService {
         response.setActive(product.isActive());
         Locale locale = new Locale("vi", "VN");
         DecimalFormat decimalFormat = (DecimalFormat) NumberFormat.getNumberInstance(locale);
-        response.setPrice(decimalFormat.format(product.getPrice()) + " đ");//revert to VND
+        response.setPrice(product.getPrice());//revert to VND
         response.setAmountAvailable(product.getAmount());
         response.setName(product.getName());
         response.setPublisherName(product.getPublisher().getName());

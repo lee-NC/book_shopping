@@ -1,7 +1,5 @@
 package com.example.book_shopping.response;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import java.util.List;
 
 /**

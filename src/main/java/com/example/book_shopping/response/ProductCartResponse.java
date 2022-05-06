@@ -7,7 +7,7 @@ package com.example.book_shopping.response;
 public class ProductCartResponse {
     private int id;
     private String name;
-    private String price;
+    private double price;
     private int amountAvailable;
     private boolean isActive;
     private String publisherName;
@@ -32,11 +32,11 @@ public class ProductCartResponse {
         this.name = name;
     }
 
-    public String getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

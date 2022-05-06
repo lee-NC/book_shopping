@@ -1,7 +1,5 @@
 package com.example.book_shopping.response;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import java.util.Date;
 import java.util.List;
 
@@ -13,7 +11,7 @@ public class OrderResponse {
     private String address;
     private int addressId;
     private String addressDesc;
-    private String value;
+    private double value;
     private String status;
     private Date createAt;
     private List<OrderProductResponse> productResponses;
@@ -53,11 +51,11 @@ public class OrderResponse {
         this.addressId = addressId;
     }
 
-    public String getValue() {
+    public double getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(double value) {
         this.value = value;
     }
 

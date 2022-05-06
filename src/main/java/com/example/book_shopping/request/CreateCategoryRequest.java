@@ -2,7 +2,6 @@ package com.example.book_shopping.request;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
 /**
  * @author lengo
@@ -14,7 +13,7 @@ public class CreateCategoryRequest {
     private String name;
     @NotNull
     @Pattern(regexp = "^[A-Za-z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ0-9\\s-,.@$!:{%*?}/&].{0,250}.|$")
-    private String desc;
+    private String description;
 
     public CreateCategoryRequest() {
     }
@@ -23,7 +22,15 @@ public class CreateCategoryRequest {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getDesc() {
-        return desc;
+        return description;
+    }
+
+    public void setDesc(String description) {
+        this.description = description;
     }
 }

@@ -15,7 +15,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -229,7 +228,7 @@ public class ProductService {
                     String fileName = fileStorageService.storeFile(file, product.get().getName());
                     fileStorageService.resizeImage(UPLOAD_DIR + fileName);
                     String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                            .path("/image/download/")
+                            .path("/products/image/download/")
                             .path(fileName)
                             .toUriString();
                     ProductImage productImage = new ProductImage();
@@ -386,7 +385,7 @@ public class ProductService {
         response.setAmount(product.getAmount());
         Locale locale = new Locale("vi", "VN");
         DecimalFormat decimalFormat = (DecimalFormat) NumberFormat.getNumberInstance(locale);
-        response.setPrice(decimalFormat.format(product.getPrice()) + " đ");//revert to VND
+        response.setPrice(product.getPrice());//revert to VND
         response.setLanguage(product.getLanguage());
         response.setPublishingYear(product.getPublishingYear());
         response.setCategory(product.getCategory());

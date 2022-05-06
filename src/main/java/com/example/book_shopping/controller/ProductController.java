@@ -1,6 +1,4 @@
 package com.example.book_shopping.controller;
-
-import com.example.book_shopping.entity.Product;
 import com.example.book_shopping.request.CreateProductRequest;
 import com.example.book_shopping.request.UpdateProductRequest;
 import com.example.book_shopping.service.ProductService;
@@ -11,12 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.Objects;
-import java.util.regex.Pattern;
 
 /**
  * @author lengo

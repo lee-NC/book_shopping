@@ -16,7 +16,7 @@ public class ProductResponse {
     private String desc;
     private int publishingYear;
     private Language language;
-    private String price;
+    private double price;
     private int amount;
     private boolean isActive;
     private Publisher publisher;
@@ -66,11 +66,11 @@ public class ProductResponse {
         this.language = language;
     }
 
-    public String getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

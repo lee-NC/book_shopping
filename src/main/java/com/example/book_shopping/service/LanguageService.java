@@ -33,6 +33,17 @@ public class LanguageService {
         }
     }
 
+    public Language get(int id) {
+        try {
+            Optional<Language> language = languageRepository.findById(id);
+            if (language.isPresent()) return language.get();
+            throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new BadRequestException(e.getMessage());
+        }
+    }
+
     public Language add(StringRequest request) {
         try {
             if (languageRepository.existsByName(request.getName().trim())) {

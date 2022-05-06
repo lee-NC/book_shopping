@@ -25,6 +25,11 @@ public class LanguageController {
         this.service = service;
     }
 
+    @GetMapping("/{languageId}")
+    public ResponseEntity<Object> getLanguage(@PathVariable("languageId") int languageId) {
+        return ResponseEntity.ok(service.get(languageId));
+    }
+
     @PutMapping("/{languageId}")
     public ResponseEntity<Object> updateLanguage(@PathVariable("languageId") int languageId, @Valid @RequestBody StringRequest request) {
         return ResponseEntity.ok(service.update(languageId, request));

@@ -1,8 +1,8 @@
 package com.example.book_shopping.request;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
-import javax.validation.constraints.Size;
+import com.example.book_shopping.entity.Product;
+
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -10,11 +10,9 @@ import java.util.Set;
  * created on 3/20/2022
  */
 public class CreateOrderRequest {
-    @Size(max = 100)
-    @NotNull
-    private Set<@Positive Integer> cartIds;
-    @NotNull
-    @Positive
+
+    private Set<Integer> cartIds;
+
     private int addressId;
 
     public CreateOrderRequest() {
@@ -27,4 +25,42 @@ public class CreateOrderRequest {
     public int getAddressId() {
         return addressId;
     }
+    private String address;
+    private String email;
+    private String name;
+    private String phoneNumber;
+    private List<Product> product;
+
+    public String getAddress() {
+        return address;
+    }
+    public void setAddress(String address) {
+        this.address = address;
+    }
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+    public List<Product> getProduct() {
+        return product;
+    }
+    public void setProduct(List<Product> product) {
+        this.product = product;
+    }
+
+    
 }

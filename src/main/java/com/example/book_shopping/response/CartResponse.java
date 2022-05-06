@@ -1,7 +1,5 @@
 package com.example.book_shopping.response;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 /**
  * @author lengo
  * created on 3/20/2022

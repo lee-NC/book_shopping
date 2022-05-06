@@ -177,7 +177,7 @@ public class OrderService {
         Product product = orderProduct.getProduct();
         response.setId(product.getId());
         response.setActive(product.isActive());
-        response.setPrice(decimalFormat.format(product.getPrice()) + " đ");//revert to VND
+        response.setPrice(product.getPrice());//revert to VND
         response.setName(product.getName());
         response.setPublisherName(product.getPublisher().getName());
         response.setAmount(orderProduct.getAmount());
@@ -191,7 +191,7 @@ public class OrderService {
         response.setAddressDesc(order.getAddress().getDescription());
         response.setStatus(order.getStatus());
         response.setCreateAt(order.getCreatedAt());
-        response.setValue(decimalFormat.format(order.getValue()) + " đ");//revert to VND
+        response.setValue(order.getValue());//revert to VND
         List<OrderProductResponse> productResponses = new ArrayList<>();
         for (OrderProduct orderProduct : order.getOrderProducts()) {
             productResponses.add(toProductOrderResponse(orderProduct));
