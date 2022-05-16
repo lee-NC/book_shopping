@@ -11,25 +11,26 @@ import java.util.Set;
  */
 public class CreateOrderRequest {
 
-    private Set<Integer> cartIds;
+    private Set<CreateProductOrderRequest> cartIds;
 
-    private int addressId;
+    // private int addressId;
 
     public CreateOrderRequest() {
     }
 
-    public Set<Integer> getCartIds() {
+    public Set<CreateProductOrderRequest> getCartIds() {
         return cartIds;
     }
 
-    public int getAddressId() {
-        return addressId;
-    }
+    // public int getAddressId() {
+    //     return addressId;
+    // }
+
+
     private String address;
     private String email;
     private String name;
     private String phoneNumber;
-    private List<Product> product;
 
     public String getAddress() {
         return address;
@@ -54,12 +55,6 @@ public class CreateOrderRequest {
     }
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-    public List<Product> getProduct() {
-        return product;
-    }
-    public void setProduct(List<Product> product) {
-        this.product = product;
     }
 
     

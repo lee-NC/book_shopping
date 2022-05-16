@@ -5,6 +5,7 @@ import com.example.book_shopping.exception.BadRequestException;
 import com.example.book_shopping.exception.NotFoundException;
 import com.example.book_shopping.repository.*;
 import com.example.book_shopping.request.CreateOrderRequest;
+import com.example.book_shopping.request.CreateProductOrderRequest;
 import com.example.book_shopping.response.ListOderResponse;
 import com.example.book_shopping.response.OrderProductResponse;
 import com.example.book_shopping.response.OrderResponse;
@@ -40,30 +41,35 @@ public class OrderService {
     public OrderResponse add(int userId, CreateOrderRequest request) {
         try {
             User user = userRepository.findByIdAndIsActiveAndIsAdmin(userId, true, false);
-            Optional<Address> address = addressRepository.findById(request.getAddressId());
-            if (user != null && address.isPresent() && address.get().getUser().equals(user)) {
+            // Optional<Address> address = addressRepository.findById(request.getAddressId());
+            if (user != null) {
                 Set<OrderProduct> orderProducts = new HashSet<>();
                 double value = 0;
                 Order order = new Order();
-                order.setAddress(address.get());
                 order.setStatus(DefineString.SUBMITTING);
+                order.setAddress(null);
                 order.setValue(value);
+                order.setAddressDesc(request.getAddress());
+                order.setEmail(request.getEmail());
+                order.setName(request.getName());
+                order.setPhoneNumber(request.getPhoneNumber());
                 order = orderRepository.save(order);
-                for (int id : request.getCartIds()) {
-                    Optional<Cart> cart = cartRepository.findById(id);
-                    if (cart.isPresent() && cart.get().getAmount() <= cart.get().getProduct().getAmount()) {
+                for (CreateProductOrderRequest id : request.getCartIds()) {
+                    Optional<Product> product = productRepository.findById(id.getProductId());
+                    if (product.isPresent() && product.get().getAmount() >= id.getAmountProduct() && product.get().isActive()) {
                         OrderProduct orderProduct = new OrderProduct();
-                        orderProduct.setAmount(cart.get().getAmount());
-                        orderProduct.setProduct(cart.get().getProduct());
+                        orderProduct.setAmount(product.get().getAmount());
+                        orderProduct.setProduct(product.get());
                         orderProduct.setOrder(order);
                         orderProduct = orderProductRepository.save(orderProduct);
                         orderProducts.add(orderProduct);
-                        value += cart.get().getProduct().getPrice() * cart.get().getAmount();
-                        Product product = cart.get().getProduct();
-                        product.setAmount(product.getAmount() - cart.get().getAmount());
-                        productRepository.save(product);
+                        value += product.get().getPrice() * product.get().getAmount();
+                        // Product product = product.get().getProduct();
+                        product.get().setAmount(product.get().getAmount() - product.get().getAmount());
+                        productRepository.save(product.get());
                     }
                 }
+                order.setValue(value);
                 order.setOrderProducts(orderProducts);
                 order = orderRepository.save(order);
                 return toOrderResponse(order);
@@ -75,21 +81,21 @@ public class OrderService {
         }
     }
 
-    public OrderResponse update(int orderId, int addressId) {
-        try {
-            Optional<Address> address = addressRepository.findById(addressId);
-            Order order = orderRepository.findByIdAndStatus(orderId, DefineString.SUBMITTING);
-            if (address.isPresent() && order != null && !address.get().equals(order.getAddress()) && address.get().getUser().equals(order.getAddress().getUser())) {
-                order.setAddress(address.get());
-                order = orderRepository.save(order);
-                return toOrderResponse(order);
-            }
-            throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new BadRequestException(e.getMessage());
-        }
-    }
+    // public OrderResponse update(int orderId, int addressId) {
+    //     try {
+    //         Optional<Address> address = addressRepository.findById(addressId);
+    //         Order order = orderRepository.findByIdAndStatus(orderId, DefineString.SUBMITTING);
+    //         if (address.isPresent() && order != null && !address.get().equals(order.getAddress()) && address.get().getUser().equals(order.getAddress().getUser())) {
+    //             order.setAddress(address.get());
+    //             order = orderRepository.save(order);
+    //             return toOrderResponse(order);
+    //         }
+    //         throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
+    //     } catch (Exception e) {
+    //         e.printStackTrace();
+    //         throw new BadRequestException(e.getMessage());
+    //     }
+    // }
 
     public List<Order> getAllOrder() {
         try {
@@ -186,9 +192,13 @@ public class OrderService {
 
     private OrderResponse toOrderResponse(Order order) {
         OrderResponse response = new OrderResponse();
-        response.setAddressId(order.getAddress().getId());
-        response.setAddress(order.getAddress().getAddressDetail());
-        response.setAddressDesc(order.getAddress().getDescription());
+        // response.setAddressId(order.getAddress().getId());
+        // response.setAddress(order.getAddress().getAddressDetail());
+        // response.setAddressDesc(order.getAddress().getDescription());
+        response.setName(order.getName());
+        response.setEmail(order.getEmail());
+        response.setPhoneNumber(order.getPhoneNumber());
+        response.setAddressDesc(order.getAddressDesc());
         response.setStatus(order.getStatus());
         response.setCreateAt(order.getCreatedAt());
         response.setValue(order.getValue());//revert to VND

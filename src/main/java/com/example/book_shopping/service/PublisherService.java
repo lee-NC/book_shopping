@@ -68,12 +68,11 @@ public class PublisherService {
             Optional<Publisher> procedure = publisherRepository.findById(id);
             if (procedure.isPresent()) {
                 if (request.getCountry() != null && !procedure.get().getCountry().equals(request.getCountry().trim())) {
-                    if (publisherRepository.existsByName(request.getName().trim()))
-                        throw new DuplicateRecordException("Name was used");
-                    procedure.get().setCountry(request.getCountry().trim());
-
+                    procedure.get().setCountry(request.getCountry().trim());  
                 }
                 if (request.getName() != null && !procedure.get().getName().equals(request.getName().trim())) {
+                    if (publisherRepository.existsByName(request.getName().trim()))
+                        throw new DuplicateRecordException("Name was used");
                     procedure.get().setName(request.getName().trim());
 
                 }

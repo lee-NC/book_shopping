@@ -26,16 +26,15 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     List<Product> findAllByPriceGreaterThanAndPriceLessThan(double greater, double less);
 
-    @Query(value = "SELECT * FROM products " +
-            " WHERE MATCH (name, description, publishingYear) AGAINST (?1 IN NATURAL LANGUAGE MODE)",
-            countQuery = "SELECT count(*) FROM products",
-            nativeQuery = true)
-    List<Product> searchProductMatch(String keyword);
+//     @Query(value = "SELECT * FROM products " +
+//             " WHERE MATCH (name, description) AGAINST (?1 IN NATURAL LANGUAGE MODE)",
+//             countQuery = "SELECT count(*) FROM products",
+//             nativeQuery = true)
+//     List<Product> searchProductMatch(String keyword);
 
     @Query(value = "SELECT p FROM products p " +
-            "WHERE lower(CONCAT(p.name, ' ', p.description, ' ', p.publishingYear))  " +
-            " LIKE %?1%",
-            countQuery = "SELECT count(p) FROM products p")
+            "WHERE lower(CONCAT(p.name, ' ', p.description))  " +
+            " LIKE %?1%")
     List<Product> searchProductRelative(String keyword);
 
 }

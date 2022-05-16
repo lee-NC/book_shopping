@@ -1,6 +1,8 @@
 package com.example.book_shopping.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 
@@ -19,6 +21,7 @@ public class Address extends BaseEntity {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne()
     @JoinColumn(name = "userId", referencedColumnName = "id", nullable = false)
+    @JsonManagedReference
     private User user;
 
     public Address() {

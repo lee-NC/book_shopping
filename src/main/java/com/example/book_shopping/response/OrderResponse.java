@@ -8,9 +8,13 @@ import java.util.List;
  * created on 3/20/2022
  */
 public class OrderResponse {
-    private String address;
-    private int addressId;
+    // private String address;
+    // private int addressId;
+    // private String addressDesc;
     private String addressDesc;
+    private String email;
+    private String name;
+    private String phoneNumber;
     private double value;
     private String status;
     private Date createAt;
@@ -27,29 +31,29 @@ public class OrderResponse {
         this.createAt = createAt;
     }
 
-    public String getAddress() {
-        return address;
-    }
+    // public String getAddress() {
+    //     return address;
+    // }
 
-    public String getAddressDesc() {
-        return addressDesc;
-    }
+    // public String getAddressDesc() {
+    //     return addressDesc;
+    // }
 
-    public void setAddressDesc(String addressDesc) {
-        this.addressDesc = addressDesc;
-    }
+    // public void setAddressDesc(String addressDesc) {
+    //     this.addressDesc = addressDesc;
+    // }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
+    // public void setAddress(String address) {
+    //     this.address = address;
+    // }
 
-    public int getAddressId() {
-        return addressId;
-    }
+    // public int getAddressId() {
+    //     return addressId;
+    // }
 
-    public void setAddressId(int addressId) {
-        this.addressId = addressId;
-    }
+    // public void setAddressId(int addressId) {
+    //     this.addressId = addressId;
+    // }
 
     public double getValue() {
         return value;
@@ -73,5 +77,30 @@ public class OrderResponse {
 
     public void setProductResponses(List<OrderProductResponse> productResponses) {
         this.productResponses = productResponses;
+    }
+
+    public String getAddressDesc() {
+        return addressDesc;
+    }
+    public void setAddressDesc(String addressDesc) {
+        this.addressDesc = addressDesc;
+    }
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }

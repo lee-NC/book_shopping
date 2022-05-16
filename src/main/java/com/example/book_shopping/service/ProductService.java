@@ -110,7 +110,7 @@ public class ProductService {
         try {
             Set<Product> products = new HashSet<>();
             products.addAll(productRepository.searchProductRelative(keyword));
-            products.addAll(productRepository.searchProductMatch(keyword));
+            // products.addAll(productRepository.searchProductMatch(keyword));
             if (!products.isEmpty()) return toProductResponses(List.copyOf(products));
             throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
         } catch (Exception e) {
@@ -394,7 +394,12 @@ public class ProductService {
         if (product.getProductImages() != null) productImages = product.getProductImages();
         List<String> imageNames = new ArrayList<>();
         for (ProductImage productImage : productImages) {
-            imageNames.add(productImage.getName());
+            // imageNames.add(productImage.getName());
+            String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                            .path("/products/image/download/")
+                            .path(productImage.getName())
+                            .toUriString();
+            imageNames.add(fileDownloadUri);
         }
         response.setImageName(imageNames);
         return response;

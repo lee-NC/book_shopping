@@ -40,10 +40,10 @@ public class OrderController {
         return ResponseEntity.ok(service.add(userId, request));
     }
 
-    @PutMapping("/{orderId}")
-    public ResponseEntity<Object> updateOrder(@PathVariable("orderId") int orderId, @RequestParam(value = "addressId") int addressId) {
-        return ResponseEntity.ok(service.update(orderId, addressId));
-    }
+    // @PutMapping("/{orderId}")
+    // public ResponseEntity<Object> updateOrder(@PathVariable("orderId") int orderId, @RequestParam(value = "addressId") int addressId) {
+    //     return ResponseEntity.ok(service.update(orderId, addressId));
+    // }
 
     @PutMapping("/cancel/{orderId}")
     public ResponseEntity<Object> cancelOrder(@PathVariable("orderId") int orderId) {

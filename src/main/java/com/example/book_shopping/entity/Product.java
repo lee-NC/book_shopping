@@ -24,7 +24,7 @@ public class Product extends BaseEntity {
     @Column(nullable = false, columnDefinition = "boolean default true")
     private boolean isActive;
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne()
     @JoinColumn(name = "languageId", referencedColumnName = "id", nullable = false)
     private Language language;
     @JsonIgnoreProperties(value = {"hibernateLazyInitializer"})

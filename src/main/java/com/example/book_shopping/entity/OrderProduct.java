@@ -1,6 +1,8 @@
 package com.example.book_shopping.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 
@@ -16,6 +18,7 @@ public class OrderProduct {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne()
     @JoinColumn(name = "order_id", referencedColumnName = "id", nullable = false)
+    @JsonManagedReference
     private Order order;
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne()
